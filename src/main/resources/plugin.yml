@@ -1,8 +1,0 @@
-main: su.nightexpress.excellentcrates.ExcellentCrates
-version: '${project.version}'
-name: ExcellentCrates
-author: NightExpress
-desciption: Fully customizable crates with rewards. Enjoy.
-depend: [ NexEngine ]
-softdepend: [ Citizens, HolographicDisplays, DecentHolograms, Vault, PlaceholderAPI ]
-api-version: 1.17
