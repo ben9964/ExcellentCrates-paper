@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import su.nexmedia.engine.api.item.PluginItemRegistry;
 import su.nexmedia.engine.api.manager.ICleanable;
 import su.nexmedia.engine.api.manager.IEditable;
 import su.nexmedia.engine.api.manager.IPlaceholder;
@@ -23,7 +24,7 @@ import java.util.function.UnaryOperator;
 
 public class CrateReward implements IEditable, ICleanable, IPlaceholder {
 
-    private final Crate crate;
+    private final Crate  crate;
     private final String id;
 
     private String          name;
@@ -42,7 +43,7 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
             crate,
             id,
 
-            "&a" + StringUtil.capitalizeFully(id) + " Reward",
+            "<green>" + StringUtil.capitalizeFully(id) + " Reward",
             25D,
             false,
 
@@ -101,12 +102,11 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
             .replace(Placeholders.REWARD_NAME, this.getName())
             .replace(Placeholders.REWARD_CHANCE, NumberUtil.format(this.getChance()))
             .replace(Placeholders.REWARD_BROADCAST, LangManager.getBoolean(this.isBroadcast()))
-            .replace(Placeholders.REWARD_PREVIEW_NAME, ItemUtil.getItemName(this.getPreview()))
-            .replace(Placeholders.REWARD_PREVIEW_LORE, String.join("\n", ItemUtil.getLore(this.getPreview())))
+            .replace(Placeholders.REWARD_PREVIEW_NAME, ComponentUtil.asMiniMessage(ItemUtil.getItemName(this.getPreview())))
+            .replace(Placeholders.REWARD_PREVIEW_LORE, String.join("|", ComponentUtil.asMiniMessage(ItemUtil.getLore(this.getPreview()))))
             .replace(Placeholders.REWARD_COMMANDS, String.join(DELIMITER_DEFAULT, this.getCommands()))
             .replace(Placeholders.REWARD_WIN_LIMIT_AMOUNT, winAmount)
-            .replace(Placeholders.REWARD_WIN_LIMIT_COOLDOWN, winCooldown)
-            ;
+            .replace(Placeholders.REWARD_WIN_LIMIT_COOLDOWN, winCooldown);
     }
 
     @Override
@@ -142,7 +142,7 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
     }
 
     public void setName(@NotNull String name) {
-        this.name = StringUtil.color(name);
+        this.name = name;
     }
 
     public double getChance() {
@@ -205,7 +205,7 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
     }
 
     public void setPreview(@NotNull ItemStack item) {
-        this.preview = new ItemStack(item);
+        this.preview = PluginItemRegistry.refreshItemStack(new ItemStack(item));
     }
 
     @NotNull
@@ -226,12 +226,24 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
     public void setItems(@NotNull List<ItemStack> items) {
         this.items = new ArrayList<>(items);
         this.items.removeIf(item -> item == null || item.getType().isAir());
+
+        // Custom plugin item integration - start
+        for (int i = 0; i < items.size(); i++) {
+            ItemStack itemStack = items.get(i);
+            itemStack = PluginItemRegistry.refreshItemStack(itemStack);
+            items.set(i, itemStack);
+        }
+        // Custom plugin item integration - end
+    }
+
+    public void addItem(@NotNull ItemStack item) {
+        this.items.add(PluginItemRegistry.refreshItemStack(item));
     }
 
     public void give(@NotNull Player player) {
         this.getItems().forEach(item -> {
             ItemStack give = new ItemStack(item);
-            ItemUtil.setPlaceholderAPI(player, give);
+            ItemUtil.setPlaceholderAPI(give, player);
             PlayerUtil.addItem(player, give);
         });
         this.getCommands().forEach(cmd -> PlayerUtil.dispatchCommand(player, cmd));
@@ -259,7 +271,8 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
             }
             if (!player.hasPermission(Perms.BYPASS_REWARD_LIMIT_COOLDOWN)) {
                 if (this.isWinLimitedCooldown()) {
-                    winLimit.setExpireDate(this.getWinLimitCooldown() < 0 ? -1L : System.currentTimeMillis() + this.getWinLimitCooldown() * 1000L);
+                    winLimit.setExpireDate(this.getWinLimitCooldown() < 0 ? -1L
+                                                                          : System.currentTimeMillis() + this.getWinLimitCooldown() * 1000L);
                 }
             }
             user.setRewardWinLimit(this, winLimit);

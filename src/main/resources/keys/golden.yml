@@ -1,11 +1,11 @@
-Name: '&e&lGolden Crate Key'
+Name: '<yellow><b>Golden Crate Key'
 Virtual: false
 Item:
   Material: TRIPWIRE_HOOK
   Amount: 1
   Durability: 0
-  Name: '&e&lGolden Crate Key'
+  Name: '<yellow<b>Golden Crate Key'
   Lore:
-    - '&7Use this key to open &e&lGolden Crate'
+    - '<gray>Use this key to open <yellow><b>Golden Crate'
   Item_Flags: [ ]
   Unbreakable: false

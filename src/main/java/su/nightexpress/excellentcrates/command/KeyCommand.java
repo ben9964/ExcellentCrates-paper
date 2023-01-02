@@ -323,14 +323,14 @@ public class KeyCommand extends GeneralCommand<ExcellentCrates> {
             plugin.getMessage(Lang.COMMAND_KEY_SHOW_FORMAT_LIST).replace(Placeholders.Player.NAME, user.getName()).asList().forEach(line -> {
                 if (line.contains(Placeholders.KEY_NAME)) {
                     keys.forEach((key, amount) -> {
-                        MessageUtil.sendCustom(sender, line
+                        MessageUtil.sendMessage(sender, line
                             .replace(Placeholders.KEY_NAME, key.getName())
                             .replace(Placeholders.GENERIC_AMOUNT, amount == -2 ? "?" : String.valueOf(amount))
                         );
                     });
                     return;
                 }
-                MessageUtil.sendCustom(sender, line);
+                MessageUtil.sendMessage(sender, line);
             });
         }
     }

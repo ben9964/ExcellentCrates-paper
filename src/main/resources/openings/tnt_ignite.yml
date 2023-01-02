@@ -8,7 +8,7 @@ Content:
     Start_Animation: redstone_1,redstone_2,redstone_3,tnt_1_1,tnt_1_2,tnt_1_3
     Item:
       Material: REDSTONE_TORCH
-      Name: '&c&lIgnite!'
+      Name: '<red><b>Ignite!'
   
   button_2:
     Slots: 4
@@ -16,7 +16,7 @@ Content:
     Start_Animation: redstone_b1,redstone_b2,redstone_b3,tnt_2_1,tnt_2_2,tnt_2_3
     Item:
       Material: REDSTONE_TORCH
-      Name: '&c&lIgnite!'
+      Name: '<red><b>Ignite!'
   
   button_3:
     Slots: 7
@@ -24,7 +24,7 @@ Content:
     Start_Animation: redstone_c1,redstone_c2,redstone_c3,tnt_3_1,tnt_3_2,tnt_3_3
     Item:
       Material: REDSTONE_TORCH
-      Name: '&c&lIgnite!'
+      Name: '<red><b>Ignite!'
   
   blackpane:
     Slots: 0,9,18,27,36,45,2,11,20,29,38,47,3,12,21,30,39,48,8,17,26,35,44,53,5,14,23,32,41,50,6,15,24,33,42,51,46,49,52

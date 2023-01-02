@@ -1,4 +1,4 @@
-Name: §a§lEmerald Crate
+Name: <green><b>Emerald Crate
 Preview_Config: xmas
 Animation_Config: spin_csgo
 Permission_Required: false
@@ -20,9 +20,9 @@ Block:
     Offset:
       Y: 1.5
     Text:
-      - §a§lEmerald Crate
-      - §fLeft Click §7to preview
-      - §fRight Click §7to open
+      - <green><b>Emerald Crate
+      - <white>Left Click <gray>to preview
+      - <white>Right Click <gray>to open
   Effect:
     Model: HELIX
     Particle:
@@ -31,7 +31,7 @@ Block:
 Rewards:
   List:
     money2500:
-      Name: §a◆ $2.500 ◆
+      Name: <green>◆ $2.500 ◆
       Chance: 5.0
       Broadcast: false
       Win_Limits:
@@ -42,7 +42,7 @@ Rewards:
         - '[CONSOLE] eco give %player% 2500'
       Items: &id001 [ ]
     money5000:
-      Name: §a◆ $5.000 ◆
+      Name: <green>◆ $5.000 ◆
       Chance: 3.0
       Broadcast: false
       Win_Limits:
@@ -53,7 +53,7 @@ Rewards:
         - '[CONSOLE] eco give %player% 5000'
       Items: *id001
     money10000:
-      Name: §a◆ $10.000 ◆
+      Name: <green>◆ $10.000 ◆
       Chance: 1.5
       Broadcast: false
       Win_Limits:
@@ -64,7 +64,7 @@ Rewards:
         - '[CONSOLE] eco give %player% 10000'
       Items: *id001
     exp10:
-      Name: §e◆ 10 Exp Levels ◆
+      Name: <yellow>◆ 10 Exp Levels ◆
       Chance: 8.0
       Broadcast: false
       Win_Limits:
@@ -75,7 +75,7 @@ Rewards:
         - '[CONSOLE] exp give %player% 10l'
       Items: *id001
     exp20:
-      Name: §e◆ 20 Exp Levels ◆
+      Name: <yellow>◆ 20 Exp Levels ◆
       Chance: 7.0
       Broadcast: false
       Win_Limits:
@@ -86,7 +86,7 @@ Rewards:
         - '[CONSOLE] exp give %player% 20l'
       Items: *id001
     exp30:
-      Name: §e◆ 30 Exp Levels ◆
+      Name: <yellow>◆ 30 Exp Levels ◆
       Chance: 6.0
       Broadcast: false
       Win_Limits:
@@ -97,7 +97,7 @@ Rewards:
         - '[CONSOLE] exp give %player% 30l'
       Items: *id001
     iron_block:
-      Name: §fx5 Iron Block
+      Name: <white>x5 Iron Block
       Chance: 12.0
       Broadcast: false
       Win_Limits:
@@ -108,7 +108,7 @@ Rewards:
       Items:
         - 1800020009km800kdlkmspb3e9gmct1qd5p6urivc9m6uorb0400agrfeln78180
     diamond_block:
-      Name: §bx5 Diamond Block
+      Name: <aqua>x5 Diamond Block
       Chance: 11.0
       Broadcast: false
       Win_Limits:
@@ -119,7 +119,7 @@ Rewards:
       Items:
         - k00010004qb400bmqqbeclhn4ob6egt68qb1dlnmsp2vc9m6uorb0400agrfeln78180
     emerald_block:
-      Name: §ax5 Emerald Block
+      Name: <green>x5 Emerald Block
       Chance: 10.0
       Broadcast: false
       Win_Limits:
@@ -130,7 +130,7 @@ Rewards:
       Items:
         - k00010004qb400bmqqbeclhn4ob6egt6arb5e9gmop2vc9m6uorb0400agrfeln78180
     golden_apple:
-      Name: §ex32 Golden Apple
+      Name: <yellow>x32 Golden Apple
       Chance: 14.0
       Broadcast: false
       Win_Limits:
@@ -141,7 +141,7 @@ Rewards:
       Items:
         - 2g0004000j9cg01crb9dpim6sj1cpq3kprfdhi6arivc5o70r350400agrfeln78800
     slime:
-      Name: §ax32 Slime Ball
+      Name: <green>x32 Slime Ball
       Chance: 17.0
       Broadcast: false
       Win_Limits:
@@ -152,7 +152,7 @@ Rewards:
       Items:
         - 1800020009km800kdlkmspb3e9gmct1qedm6irb5bth62r3c0400agrfeln78800
     trident:
-      Name: §3Trident
+      Name: <dark_aqua>Trident
       Chance: 15.0
       Broadcast: false
       Win_Limits:
@@ -163,7 +163,7 @@ Rewards:
       Items:
         - 2g0004000j9cg012rb9dpim6sj1cpq3kt3id5i6arjk18006t31cs1g01i4c5mm2pr5000000000400agrfeln78080
     elytra:
-      Name: §dElytra
+      Name: <light_purple>Elytra
       Chance: 9.0
       Broadcast: false
       Win_Limits:
@@ -174,7 +174,7 @@ Rewards:
       Items:
         - a0000g002d5i0043dd5n6aoric5j78ej5dhsn8sj118006t31cs1g01i4c5mm2pr5000000000400agrfeln78080
     netherite_ingot:
-      Name: §8x5 Netherite Ingot
+      Name: <dark_gray>x5 Netherite Ingot
       Chance: 16.0
       Broadcast: false
       Win_Limits:
@@ -185,7 +185,7 @@ Rewards:
       Items:
         - 1800020009km800pdlkmspb3e9gmct1qdpin8q35e9kn8pavd5n6errk0400agrfeln78180
     ender_pearl:
-      Name: §bx16 Ender Pearl
+      Name: <aqua>x16 Ender Pearl
       Chance: 20.0
       Broadcast: false
       Win_Limits:
@@ -196,7 +196,7 @@ Rewards:
       Items:
         - a0000g002d5i005bdd5n6aoric5j78ej5dpi6asive1im2sjc0400agrfeln78400
     sugar:
-      Name: §fx32 Sugar
+      Name: <white>x32 Sugar
       Chance: 25.0
       Broadcast: false
       Win_Limits:
@@ -207,7 +207,7 @@ Rewards:
       Items:
         - 1800020009km800fdlkmspb3e9gmct1qedqmeobi0400agrfeln78800
     shulker_shell:
-      Name: §dx8 Shulker Shell
+      Name: <light_purple>x8 Shulker Shell
       Chance: 13.0
       Broadcast: false
       Win_Limits:
@@ -218,7 +218,7 @@ Rewards:
       Items:
         - k00010004qb400bmqqbeclhn4ob6egt76q3ldhlmasivedk6ar3c0400agrfeln78200
     test:
-      Name: §aTest Reward
+      Name: <green>Test Reward
       Chance: 25.0
       Broadcast: false
       Win_Limits:
@@ -232,9 +232,9 @@ Item:
   Amount: 1
   Head_Texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmMwZTZkOWUyNDI3MzU0ODE5MThjNWZkMTQ0OThiZDc2MGJiOWY0ZmY2NDMwYWQ0Njk2YjM4ZThhODgzZGE5NyJ9fX0=
   Durability: 0
-  Name: '&a&lEmerald Crate &7(Right-Click)'
+  Name: '<green><b>Emerald Crate</b> <gray>(Right-Click)'
   Lore:
-    - '&fLeft Click &7to preview'
-    - '&fRight Click &7to open'
+    - '<white>Left Click <gray>to preview'
+    - '<white>Right Click <gray>to open'
   Item_Flags: *id001
   Unbreakable: false

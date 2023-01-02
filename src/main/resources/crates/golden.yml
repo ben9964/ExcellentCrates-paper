@@ -1,4 +1,4 @@
-Name: §e§lGolden Crate
+Name: <yellow><b>Golden Crate
 Preview_Config: valentine
 Permission_Required: false
 Attached_Citizens: ''
@@ -19,11 +19,9 @@ Block:
     Offset:
       Y: 1.85
     Text:
-      - §e§lGolden Crate
-      - §fLeft Click §7to preview
-      - §fRight Click §7to open
-      - §7
-      - §7Buy keys at §e§nwww.myserver.com§e§n
+      - <yellow><b>Golden Crate
+      - <white>Left Click <gray>to preview
+      - <white>Right Click <gray>to open
   Effect:
     Model: HELIX
     Particle:
@@ -301,9 +299,9 @@ Item:
   Amount: 1
   Head_Texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWU1YmI4YjMxZjQ2YWE5YWYxYmFhODhiNzRmMGZmMzgzNTE4Y2QyM2ZhYWM1MmEzYWNiOTZjZmU5MWUyMmViYyJ9fX0=
   Durability: 0
-  Name: '&e&lGolden Crate &7(Right-Click)'
+  Name: '<yellow><b>Golden Crate <gray>(Right-Click)'
   Lore:
-    - '&fLeft Click &7to preview'
-    - '&fRight Click &7to open'
+    - '<white>Left Click <gray>to preview'
+    - '<white>Right Click <gray>to open'
   Item_Flags: [ ]
   Unbreakable: false

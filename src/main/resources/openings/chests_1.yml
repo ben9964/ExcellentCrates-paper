@@ -8,7 +8,7 @@ Content:
     Start_Animation: panes
     Item:
       Material: CHEST
-      Name: '&e&lClick for Reward!'
+      Name: '<yellow><b>Click for Reward!'
   
   button_2:
     Slots: 13
@@ -17,7 +17,7 @@ Content:
     Item:
       Material: CHEST
       Amount: 2
-      Name: '&e&lClick for Reward!'
+      Name: '<yellow><b>Click for Reward!'
   
   button_3:
     Slots: 15
@@ -26,7 +26,7 @@ Content:
     Item:
       Material: CHEST
       Amount: 3
-      Name: '&e&lClick for Reward!'
+      Name: '<yellow><b>Click for Reward!'
 
 Rewards:
   main1:

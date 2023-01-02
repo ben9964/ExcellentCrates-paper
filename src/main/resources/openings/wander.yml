@@ -1,4 +1,4 @@
-Title: '&nOpening crate...'
+Title: 'Opening crate...'
 Size: 54
 
 Content:
@@ -7,13 +7,13 @@ Content:
     Type: NONE
     Item:
       Material: NETHER_STAR
-      Name: '&c&l↓ PRIZE ↓'
+      Name: '<red><b>↓ PRIZE ↓'
   netherstar2:
     Slots: 22
     Type: NONE
     Item:
       Material: NETHER_STAR
-      Name: '&c&l↑ PRIZE ↑'
+      Name: '<red><b>↑ PRIZE ↑'
 
 Rewards:
   example1:

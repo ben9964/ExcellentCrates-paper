@@ -10,6 +10,7 @@ import su.nexmedia.engine.api.manager.ICleanable;
 import su.nexmedia.engine.api.manager.IEditable;
 import su.nexmedia.engine.api.manager.IPlaceholder;
 import su.nexmedia.engine.lang.LangManager;
+import su.nexmedia.engine.utils.ComponentUtil;
 import su.nexmedia.engine.utils.ItemUtil;
 import su.nexmedia.engine.utils.PDCUtil;
 import su.nexmedia.engine.utils.StringUtil;
@@ -33,13 +34,13 @@ public class CrateKey extends AbstractLoadableItem<ExcellentCrates> implements I
     public CrateKey(@NotNull ExcellentCrates plugin, @NotNull String id) {
         super(plugin, plugin.getDataFolder() + Config.DIR_KEYS + id.toLowerCase() + ".yml");
 
-        this.setName("&6" + StringUtil.capitalizeFully(this.getId()) + " Crate Key");
+        this.setName("<gold>" + StringUtil.capitalizeFully(this.getId()) + " Crate Key");
         this.setVirtual(false);
 
         ItemStack item = new ItemStack(Material.TRIPWIRE_HOOK);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(this.getName());
+            meta.displayName(ComponentUtil.asComponent(this.getName()));
             item.setItemMeta(meta);
         }
         this.setItem(item);
@@ -74,8 +75,7 @@ public class CrateKey extends AbstractLoadableItem<ExcellentCrates> implements I
             .replace(Placeholders.KEY_ID, this.getId())
             .replace(Placeholders.KEY_NAME, this.getName())
             .replace(Placeholders.KEY_VIRTUAL, LangManager.getBoolean(this.isVirtual()))
-            .replace(Placeholders.KEY_ITEM_NAME, ItemUtil.getItemName(this.getItem()))
-            ;
+            .replace(Placeholders.KEY_ITEM_NAME, ComponentUtil.asMiniMessage(ItemUtil.getItemName(this.getItem())));
     }
 
     @Override
@@ -108,7 +108,7 @@ public class CrateKey extends AbstractLoadableItem<ExcellentCrates> implements I
     }
 
     public void setName(@NotNull String name) {
-        this.name = StringUtil.color(name);
+        this.name = name;
     }
 
     public boolean isVirtual() {

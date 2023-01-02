@@ -1,4 +1,4 @@
-Name: §x§3§F§6§8§E§A§lVirtual Crate
+Name: <#3f68ea>Virtual Crate
 Preview_Config: default
 Permission_Required: false
 Attached_Citizens: ''
@@ -19,8 +19,7 @@ Block:
     Offset:
       Y: 1.5
     Text:
-      - §bVIRTUAL CRATE
-      - §7Buy a key at §cwww.myserver.com§c
+      - <aqua>VIRTUAL CRATE
   Effect:
     Model: HELIX
     Particle:
@@ -221,6 +220,6 @@ Item:
   Amount: 1
   Head_Texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI0ODZmMjg1OTE2OWM4YmZiNjZhNjg3YmNmNGM2OTkzNDE3ZjU4NGI1OGJiZmRiMzM2NDY0ZDUyMDcxY2NkNyJ9fX0=
   Durability: 0
-  Name: '&x&3&F&6&8&E&A&lVirtual Crate'
+  Name: '<#3f68ea><b>Virtual Crate'
   Item_Flags: [ ]
   Unbreakable: false

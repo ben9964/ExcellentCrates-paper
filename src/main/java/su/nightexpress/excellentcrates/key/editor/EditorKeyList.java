@@ -88,8 +88,8 @@ public class EditorKeyList extends AbstractEditorMenuAuto<ExcellentCrates, KeyMa
         if (meta == null) return item;
 
         ItemStack object = CrateEditorType.KEY_OBJECT.getItem();
-        meta.setDisplayName(ItemUtil.getItemName(object));
-        meta.setLore(ItemUtil.getLore(object));
+        meta.displayName(ItemUtil.getItemName(object));
+        meta.lore(ItemUtil.getLore(object));
         meta.addItemFlags(ItemFlag.values());
         item.setItemMeta(meta);
 

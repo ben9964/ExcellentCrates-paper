@@ -16,6 +16,7 @@ import su.nexmedia.engine.api.menu.MenuItem;
 import su.nexmedia.engine.api.menu.MenuItemType;
 import su.nexmedia.engine.editor.AbstractEditorMenu;
 import su.nexmedia.engine.editor.EditorManager;
+import su.nexmedia.engine.utils.ComponentUtil;
 import su.nexmedia.engine.utils.ItemUtil;
 import su.nexmedia.engine.utils.PlayerUtil;
 import su.nexmedia.engine.utils.StringUtil;
@@ -36,21 +37,21 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
         Crate crate = reward.getCrate();
 
         EditorInput<CrateReward, CrateEditorType> input = (player, reward2, type, e) -> {
-            String msg = StringUtil.color(e.getMessage());
+            String msg = e.getMessage();
             switch (type) {
                 case REWARD_CHANGE_CHANCE -> {
-                    double chance = StringUtil.getDouble(StringUtil.colorOff(msg), -1);
+                    double chance = StringUtil.getDouble(StringUtil.asPlainText(msg), -1);
                     if (chance < 0) {
                         EditorManager.error(player, plugin.getMessage(Lang.EDITOR_ERROR_NUMBER_GENERIC).getLocalized());
                         return false;
                     }
                     reward.setChance(chance);
                 }
-                case REWARD_CHANGE_COMMANDS -> reward.getCommands().add(StringUtil.colorOff(msg));
+                case REWARD_CHANGE_COMMANDS -> reward.getCommands().add(StringUtil.asPlainText(msg));
                 case REWARD_CHANGE_NAME -> reward.setName(msg);
-                case REWARD_CHANGE_WIN_LIMITS_AMOUNT -> reward.setWinLimitAmount(StringUtil.getInteger(StringUtil.colorOff(msg), -1, true));
-                case REWARD_CHANGE_WIN_LIMITS_COOLDOWN -> reward.setWinLimitCooldown(StringUtil.getInteger(StringUtil.colorOff(msg), 0, true));
-                default -> { }
+                case REWARD_CHANGE_WIN_LIMITS_AMOUNT -> reward.setWinLimitAmount(StringUtil.getInteger(StringUtil.asPlainText(msg), -1, true));
+                case REWARD_CHANGE_WIN_LIMITS_COOLDOWN -> reward.setWinLimitCooldown(StringUtil.getInteger(StringUtil.asPlainText(msg), 0, true));
+                default -> {}
             }
 
             reward.getCrate().save();
@@ -70,7 +71,7 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
                 switch (type2) {
                     case REWARD_CHANGE_NAME -> {
                         if (e.isRightClick()) {
-                            reward.setName(ItemUtil.getItemName(reward.getPreview()));
+                            reward.setName(ComponentUtil.asMiniMessage(ItemUtil.getItemName(reward.getPreview())));
                             break;
                         }
                         EditorManager.startEdit(player, reward, type2, input);

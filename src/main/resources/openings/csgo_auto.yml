@@ -5,7 +5,7 @@ Content:
   reward_point:
     Item:
       Material: REDSTONE_TORCH
-      Name: '&c&lPRIZE'
+      Name: '<red><b>PRIZE'
     Slots: 4,22
 
 Rewards:

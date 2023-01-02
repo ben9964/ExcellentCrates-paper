@@ -8,11 +8,11 @@ Content:
     Start_Animation: panes
     Item:
       Material: ENDER_CHEST
-      Name: '&d&l[?] MYSTERY CRATE [?]'
+      Name: '<light_purple><b>[?] MYSTERY CRATE [?]'
       Lore:
-      - '&7What''s in the crate?'
-      - '&7'
-      - '&d&lClick me to Roll!'
+      - '<gray>What''s in the crate?'
+      - '<gray>'
+      - '<light_purple><b>Click me to Roll!'
 
 Rewards:
   main:

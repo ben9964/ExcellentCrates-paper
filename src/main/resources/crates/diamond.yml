@@ -1,4 +1,4 @@
-Name: §b§lDiamond Crate
+Name: <aqua><b>Diamond Crate
 Preview_Config: blue
 Permission_Required: false
 Attached_Citizens: ''
@@ -19,9 +19,9 @@ Block:
     Offset:
       Y: 1.5
     Text:
-      - §b§lDiamond Crate
-      - §fLeft Click §7to preview
-      - §fRight Click §7to open
+      - <aqua><b>Diamond Crate
+      - <gray><white>Left Click</white> to preview
+      - <gray><white>Right Click</white> to open
   Effect:
     Model: HELIX
     Particle:
@@ -30,7 +30,7 @@ Block:
 Rewards:
   List:
     rank_coal:
-      Name: §e◆ Coal Rank ◆
+      Name: <yellow>◆ Coal Rank ◆
       Chance: 50.0
       Broadcast: true
       Win_Limits:
@@ -41,7 +41,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add coal'
       Items: &id001 [ ]
     rank_iron:
-      Name: §e◆ Iron Rank ◆
+      Name: <yellow>◆ Iron Rank ◆
       Chance: 40.0
       Broadcast: true
       Win_Limits:
@@ -52,7 +52,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add iron'
       Items: *id001
     rank_bronze:
-      Name: §e◆ Bronze Rank ◆
+      Name: <yellow>◆ Bronze Rank ◆
       Chance: 35.0
       Broadcast: true
       Win_Limits:
@@ -63,7 +63,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add bronze'
       Items: *id001
     rank_silver:
-      Name: §e◆ Silver Rank ◆
+      Name: <yellow>◆ Silver Rank ◆
       Chance: 30.0
       Broadcast: true
       Win_Limits:
@@ -74,7 +74,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add silver'
       Items: *id001
     rank_gold:
-      Name: §e◆ Gold Rank ◆
+      Name: <yellow>◆ Gold Rank ◆
       Chance: 25.0
       Broadcast: true
       Win_Limits:
@@ -85,7 +85,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add gold'
       Items: *id001
     rank_redstone:
-      Name: §e◆ Redstone Rank ◆
+      Name: <yellow>◆ Redstone Rank ◆
       Chance: 20.0
       Broadcast: true
       Win_Limits:
@@ -96,7 +96,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add redstone'
       Items: *id001
     rank_lapis:
-      Name: §e◆ Lapis Rank ◆
+      Name: <yellow>◆ Lapis Rank ◆
       Chance: 15.0
       Broadcast: true
       Win_Limits:
@@ -107,7 +107,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add lapis'
       Items: *id001
     rank_diamon:
-      Name: §e◆ Diamond Rank ◆
+      Name: <yellow>◆ Diamond Rank ◆
       Chance: 10.0
       Broadcast: true
       Win_Limits:
@@ -118,7 +118,7 @@ Rewards:
         - '[CONSOLE] lp user %player% parent add diamond'
       Items: *id001
     rank_emerald:
-      Name: §e◆ Emerald Rank ◆
+      Name: <yellow>◆ Emerald Rank ◆
       Chance: 5.0
       Broadcast: true
       Win_Limits:
@@ -133,9 +133,9 @@ Item:
   Amount: 1
   Head_Texture: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2E0MzgxYTVhYjRhY2M2ZGU4ZDRlZWU3NjllYmE2YmFkYjJmMmI0ZTkzNDJhY2FlMjc1MDI5NWU2MDYwNGE1NyJ9fX0=
   Durability: 0
-  Name: '&b&lDiamond Crate &7(Right-Click)'
+  Name: '<aqua><b>Diamond Crate</b> <gray>(Right-Click)'
   Lore:
-    - '&fLeft Click &7to preview'
-    - '&fRight Click &7to open'
+    - '<white>Left Click <gray>to preview'
+    - '<white>Right Click <gray>to open'
   Item_Flags: *id001
   Unbreakable: false

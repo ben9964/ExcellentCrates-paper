@@ -1,6 +1,5 @@
 package su.nightexpress.excellentcrates.opening.animation;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +58,7 @@ public class AnimationTask extends OpeningTask {
             }
         }
 
-        inventory.getViewers().forEach(player -> MessageUtil.sound((Player) player, this.parent.getSoundTick()));
+        inventory.getViewers().forEach(player -> MessageUtil.playSound(player, this.parent.getSoundTick()));
     }
 
     @NotNull

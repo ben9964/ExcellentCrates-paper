@@ -10,6 +10,7 @@ import su.nexmedia.engine.api.menu.AbstractMenuAuto;
 import su.nexmedia.engine.api.menu.MenuClick;
 import su.nexmedia.engine.api.menu.MenuItem;
 import su.nexmedia.engine.api.menu.MenuItemType;
+import su.nexmedia.engine.utils.ComponentUtil;
 import su.nexmedia.engine.utils.ItemUtil;
 import su.nexmedia.engine.utils.StringUtil;
 import su.nightexpress.excellentcrates.ExcellentCrates;
@@ -38,15 +39,15 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
     public CratePreview(@NotNull Crate crate, @NotNull JYML cfg) {
         super(crate.plugin(), cfg, "");
         this.crate = crate;
-        this.title = crate.replacePlaceholders().apply(this.title);
+        this.title = ComponentUtil.replace(this.title, crate.replacePlaceholders());
 
         this.hideDrainedRewards = cfg.getBoolean("Reward.Hide_Drained_Rewards");
         this.rewardSlots = cfg.getIntArray("Reward.Slots");
-        this.rewardName = StringUtil.color(cfg.getString("Reward.Name", Placeholders.REWARD_PREVIEW_NAME));
-        this.rewardLore = StringUtil.color(cfg.getStringList("Reward.Lore.Default"));
-        this.rewardLoreLimitAmount = StringUtil.color(cfg.getStringList("Reward.Lore.Win_Limit.Amount"));
-        this.rewardLoreLimitCoolown = StringUtil.color(cfg.getStringList("Reward.Lore.Win_Limit.Cooldown"));
-        this.rewardLoreLimitDrained = StringUtil.color(cfg.getStringList("Reward.Lore.Win_Limit.Drained"));
+        this.rewardName = cfg.getString("Reward.Name", Placeholders.REWARD_PREVIEW_NAME);
+        this.rewardLore = cfg.getStringList("Reward.Lore.Default");
+        this.rewardLoreLimitAmount = cfg.getStringList("Reward.Lore.Win_Limit.Amount");
+        this.rewardLoreLimitCoolown = cfg.getStringList("Reward.Lore.Win_Limit.Cooldown");
+        this.rewardLoreLimitDrained = cfg.getStringList("Reward.Lore.Win_Limit.Drained");
 
         MenuClick click = (player, type, e) -> {
             if (type instanceof MenuItemType type2) {
@@ -100,8 +101,8 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
         lore = StringUtil.replace(lore, PLACEHOLDER_WIN_LIMIT_DRAINED, false, this.rewardLoreLimitDrained);
         lore.replaceAll(crateUser.replacePlaceholers(reward));
 
-        meta.setDisplayName(this.rewardName);
-        meta.setLore(lore);
+        meta.displayName(ComponentUtil.asComponent(this.rewardName));
+        meta.lore(ComponentUtil.asComponent(lore));
         item.setItemMeta(meta);
 
         ItemUtil.replace(item, reward.replacePlaceholders());

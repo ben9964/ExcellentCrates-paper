@@ -77,6 +77,17 @@ bukkit {
 }
 
 tasks {
+    compileJava {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+        options.release.set(17)
+    }
+    javadoc {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+    }
+    processResources {
+        filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
+    }
+
     val outputFileName = "ExcellentCrates-${project.version}"
 
     jar {
@@ -89,7 +100,7 @@ tasks {
         dependsOn(build)
         doLast {
             exec {
-                commandLine("rsync", "${jar.get().archiveFile.get()}", "dev:data/dev/jar")
+                commandLine("rsync", jar.get().archiveFile.get().asFile.absoluteFile, "dev:data/dev/jar")
             }
         }
     }
@@ -97,6 +108,9 @@ tasks {
 
 java {
     withSourcesJar()
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 publishing {

@@ -46,7 +46,7 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
         this.crate = crate;
 
         EditorInput<Crate, CrateEditorType> input = (player, crate2, type, e) -> {
-            String msg = StringUtil.color(e.getMessage());
+            String msg = e.getMessage();
 
             switch (type) {
                 case CRATE_CHANGE_BLOCK_HOLOGRAM_TEXT -> {
@@ -56,16 +56,16 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                     crate2.updateHologram();
                 }
                 case CRATE_CHANGE_BLOCK_HOLOGRAM_OFFSET_Y -> {
-                    double offset = StringUtil.getDouble(StringUtil.colorOff(msg), 0D);
+                    double offset = StringUtil.getDouble(StringUtil.asPlainText(msg), 0D);
                     crate2.setBlockHologramOffsetY(offset);
                     crate2.updateHologram();
                 }
                 case CRATE_CHANGE_COOLDOWN -> {
-                    int cooldown = StringUtil.getInteger(StringUtil.colorOff(msg), 0);
+                    int cooldown = StringUtil.getInteger(StringUtil.asPlainText(msg), 0);
                     crate2.setOpenCooldown(cooldown);
                 }
                 case CRATE_CHANGE_CITIZENS -> {
-                    int npcId = StringUtil.getInteger(StringUtil.colorOff(msg), -1);
+                    int npcId = StringUtil.getInteger(StringUtil.asPlainText(msg), -1);
                     if (npcId < 0) {
                         EditorManager.error(player, plugin.getMessage(Lang.EDITOR_ERROR_NUMBER_GENERIC).getLocalized());
                         return false;
@@ -83,7 +83,7 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                 case CRATE_CHANGE_NAME -> crate2.setName(msg);
                 case CRATE_CHANGE_KEYS -> crate2.getKeyIds().add(EditorManager.fineId(msg));
                 case CRATE_CHANGE_OPEN_COST_MONEY -> {
-                    double costMoney = StringUtil.getDouble(StringUtil.colorOff(msg), -1);
+                    double costMoney = StringUtil.getDouble(StringUtil.asPlainText(msg), -1);
                     if (costMoney < 0) {
                         EditorManager.error(player, plugin.getMessage(Lang.EDITOR_ERROR_NUMBER_GENERIC).getLocalized());
                         return false;
@@ -91,15 +91,15 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                     crate2.setOpenCost(OpenCostType.MONEY, costMoney);
                 }
                 case CRATE_CHANGE_OPEN_COST_EXP -> {
-                    double costExp = StringUtil.getDouble(StringUtil.colorOff(msg), -1);
+                    double costExp = StringUtil.getDouble(StringUtil.asPlainText(msg), -1);
                     if (costExp < 0) {
                         EditorManager.error(player, plugin.getMessage(Lang.EDITOR_ERROR_NUMBER_GENERIC).getLocalized());
                         return false;
                     }
                     crate2.setOpenCost(OpenCostType.EXP, (int) costExp);
                 }
-                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_NAME -> crate2.getBlockEffect().setParticleName(StringUtil.colorOff(msg));
-                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_DATA -> crate2.getBlockEffect().setParticleData(StringUtil.colorOff(msg));
+                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_NAME -> crate2.getBlockEffect().setParticleName(StringUtil.asPlainText(msg));
+                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_DATA -> crate2.getBlockEffect().setParticleData(StringUtil.asPlainText(msg));
                 default -> { }
             }
 

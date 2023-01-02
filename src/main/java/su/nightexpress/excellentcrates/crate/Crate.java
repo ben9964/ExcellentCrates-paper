@@ -34,9 +34,9 @@ import java.util.stream.Stream;
 
 public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICleanable, IEditable, IPlaceholder {
 
-    private String name;
-    private String openingConfig;
-    private String previewConfig;
+    private String  name;
+    private String  openingConfig;
+    private String  previewConfig;
     private boolean isPermissionRequired;
     private int[]   attachedCitizens;
 
@@ -61,21 +61,21 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
     public Crate(@NotNull ExcellentCrates plugin, @NotNull String id) {
         this(plugin, new JYML(plugin.getDataFolder() + Config.DIR_CRATES, id.toLowerCase() + ".yml"));
 
-        this.setName("&b" + StringUtil.capitalizeFully(this.getId() + " Crate"));
+        this.setName("<aqua>" + StringUtil.capitalizeFully(this.getId() + " Crate"));
         this.setOpeningConfig(null);
         this.setPreviewConfig(Placeholders.DEFAULT);
 
         ItemStack item = new ItemStack(Material.ENDER_CHEST);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(this.getName());
+            meta.displayName(ComponentUtil.asComponent(this.getName()));
         }
         this.setItem(item);
 
         this.setBlockPushbackEnabled(true);
         this.setBlockHologramEnabled(false);
         this.setBlockHologramOffsetY(1.5D);
-        this.setBlockHologramText(Arrays.asList("&c&l" + this.getName().toUpperCase(), "&7Buy a key at &cwww.myserver.com"));
+        this.setBlockHologramText(Arrays.asList("<red><b>" + this.getName().toUpperCase(), "<gray>Buy a key at <red>www.myserver.com"));
         this.setBlockEffect(new CrateEffectSettings(CrateEffectModel.HELIX, Particle.FLAME.name(), ""));
     }
 
@@ -201,12 +201,12 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
             .replace(Placeholders.CRATE_OPENING_COST_EXP, NumberUtil.format(this.getOpenCost(OpenCostType.EXP)))
             .replace(Placeholders.CRATE_OPENING_COST_MONEY, NumberUtil.format(this.getOpenCost(OpenCostType.MONEY)))
             .replace(Placeholders.CRATE_KEY_IDS, String.join(DELIMITER_DEFAULT, this.getKeyIds()))
-            .replace(Placeholders.CRATE_ITEM_NAME, ItemUtil.getItemName(this.getItem()))
-            .replace(Placeholders.CRATE_ITEM_LORE, String.join("\n", ItemUtil.getLore(this.getItem())))
+            .replace(Placeholders.CRATE_ITEM_NAME, ComponentUtil.asMiniMessage(ItemUtil.getItemName(this.getItem())))
+            .replace(Placeholders.CRATE_ITEM_LORE, String.join("\n", ComponentUtil.asMiniMessage(ItemUtil.getLore(this.getItem()))))
             .replace(Placeholders.CRATE_BLOCK_PUSHBACK_ENABLED, LangManager.getBoolean(this.isBlockPushbackEnabled()))
             .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_ENABLED, LangManager.getBoolean(this.isBlockHologramEnabled()))
             .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_OFFSET_Y, NumberUtil.format(this.getBlockHologramOffsetY()))
-            .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, String.join("\n", this.getBlockHologramText()))
+            .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, String.join("|", this.getBlockHologramText()))
             .replace(Placeholders.CRATE_BLOCK_LOCATIONS, String.join(DELIMITER_DEFAULT, this.getBlockLocations().stream().map(location -> {
                 String x = NumberUtil.format(location.getX());
                 String y = NumberUtil.format(location.getY());
@@ -216,8 +216,7 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
             }).toList()))
             .replace(Placeholders.CRATE_BLOCK_EFFECT_MODEL, this.getBlockEffect().getModel().name())
             .replace(Placeholders.CRATE_BLOCK_EFFECT_PARTICLE_NAME, this.getBlockEffect().getParticleName())
-            .replace(Placeholders.CRATE_BLOCK_EFFECT_PARTICLE_DATA, this.getBlockEffect().getParticleData())
-            ;
+            .replace(Placeholders.CRATE_BLOCK_EFFECT_PARTICLE_DATA, this.getBlockEffect().getParticleData());
     }
 
     @Override
@@ -274,7 +273,7 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
     }
 
     public void setName(@NotNull String name) {
-        this.name = StringUtil.color(name);
+        this.name = name;
     }
 
     @Nullable
@@ -402,7 +401,7 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
     }
 
     public void setBlockHologramText(@NotNull List<String> blockHologramText) {
-        this.blockHologramText = StringUtil.color(blockHologramText);
+        this.blockHologramText = blockHologramText;
     }
 
     @NotNull

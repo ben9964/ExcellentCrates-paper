@@ -14,8 +14,8 @@ import su.nexmedia.engine.api.menu.MenuClick;
 import su.nexmedia.engine.api.menu.MenuItemType;
 import su.nexmedia.engine.editor.AbstractEditorMenuAuto;
 import su.nexmedia.engine.editor.EditorManager;
+import su.nexmedia.engine.utils.ComponentUtil;
 import su.nexmedia.engine.utils.ItemUtil;
-import su.nexmedia.engine.utils.StringUtil;
 import su.nightexpress.excellentcrates.ExcellentCrates;
 import su.nightexpress.excellentcrates.config.Lang;
 import su.nightexpress.excellentcrates.crate.Crate;
@@ -35,7 +35,7 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
         super(crate.plugin(), crate, CrateEditorMenu.TITLE_CRATE, 45);
 
         EditorInput<Crate, CrateEditorType> input = (player, crate2, type, e) -> {
-            String msg = StringUtil.color(e.getMessage());
+            String msg = e.getMessage();
 
             if (type == CrateEditorType.REWARD_CREATE) {
                 String id = EditorManager.fineId(msg);
@@ -62,14 +62,14 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
                 if (type2 == CrateEditorType.REWARD_CREATE) {
                     ItemStack cursor = e.getCursor();
                     if (cursor != null && !cursor.getType().isAir()) {
-                        String id = EditorManager.fineId(ItemUtil.getItemName(cursor));
+                        String id = EditorManager.fineId(ComponentUtil.asPlainText(ItemUtil.getItemName(cursor)));
                         int count = 0;
                         while (crate.getReward(count == 0 ? id : id + count) != null) {
                             count++;
                         }
                         CrateReward reward = new CrateReward(this.parent, count == 0 ? id : id + count);
-                        reward.setName(ItemUtil.getItemName(cursor));
-                        reward.getItems().add(new ItemStack(cursor));
+                        reward.setName(ComponentUtil.asMiniMessage(ItemUtil.getItemName(cursor)));
+                        reward.addItem(new ItemStack(cursor));
                         reward.setPreview(cursor);
                         crate.addReward(reward);
                         crate.save();
@@ -86,7 +86,7 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
                     Comparator<CrateReward> comparator;
                     if (e.isShiftClick()) {
                         //if (e.isLeftClick()) {
-                            comparator = Comparator.comparing(r -> ItemUtil.getItemName(r.getPreview()));
+                            comparator = Comparator.comparing(r -> ComponentUtil.asPlainText(ItemUtil.getItemName(r.getPreview())));
                         //}
                     }
                     else if (e.isRightClick()) {
@@ -133,8 +133,8 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
         if (meta == null) return item;
 
         ItemStack object = CrateEditorType.REWARD_OBJECT.getItem();
-        meta.setDisplayName(ItemUtil.getItemName(object));
-        meta.setLore(ItemUtil.getLore(object));
+        meta.displayName(ItemUtil.getItemName(object));
+        meta.lore(ItemUtil.getLore(object));
         meta.addItemFlags(ItemFlag.values());
         item.setItemMeta(meta);
 

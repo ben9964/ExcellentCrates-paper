@@ -88,8 +88,8 @@ public class EditorCrateList extends AbstractEditorMenuAuto<ExcellentCrates, Cra
         if (meta == null) return item;
 
         ItemStack object = CrateEditorType.CRATE_OBJECT.getItem();
-        meta.setDisplayName(ItemUtil.getItemName(object));
-        meta.setLore(ItemUtil.getLore(object));
+        meta.displayName(ItemUtil.getItemName(object));
+        meta.lore(ItemUtil.getLore(object));
         item.setItemMeta(meta);
 
         ItemUtil.replace(item, crate.replacePlaceholders());

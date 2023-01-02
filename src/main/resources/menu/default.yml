@@ -1,4 +1,4 @@
-Title: '&nCrates Menu'
+Title: 'Crates Menu'
 Size: 36
 
 Crates:
@@ -11,13 +11,13 @@ Crates:
           Name: '%crate_name%'
           Lore:
             - '%crate_item_lore%'
-            - '&7'
-            - '&9▸ &7You have: &9%user_keys% keys'
-            - '&9▸ &7Money Cost: &9$%crate_opening_cost_money%'
-            - '&9▸ &7Exp Cost: &9%crate_opening_cost_exp%'
-            - '&7'
-            - '&fLeft Click &7to preview'
-            - '&fRight Click &7to open'
+            - '<gray>'
+            - '<blue>▸ <gray>You have: <blue>%user_keys% keys'
+            - '<blue>▸ <gray>Money Cost: <blue>$%crate_opening_cost_money%'
+            - '<blue>▸ <gray>Exp Cost: <blue>%crate_opening_cost_exp%'
+            - '<gray>'
+            - '<white>Left Click <gray>to preview'
+            - '<white>Right Click <gray>to open'
     Slots: 13
 
 Content:
@@ -26,7 +26,7 @@ Content:
       default:
         Item:
           Material: 'BARRIER'
-          Name: '&c&lClose'
+          Name: '<red><b>Close'
     Slots: 31
     Type: CLOSE
 
@@ -35,12 +35,12 @@ Content:
       default:
         Item:
           Material: 'BOOK'
-          Name: '&e&nWhat is it?'
+          Name: '<yellow><u>What is it?'
           Lore:
-            - '&6This is special crates menu,'
-            - '&6where you can open creates using'
-            - '&6virtual keys, which you can buy'
-            - '&6in our store.'
+            - '<gold>This is special crates menu,'
+            - '<gold>where you can open creates using'
+            - '<gold>virtual keys, which you can buy'
+            - '<gold>in our store.'
     Slots: 28
     Type: NONE
 
@@ -49,11 +49,11 @@ Content:
       default:
         Item:
           Material: 'EMERALD'
-          Name: '&a&nStore'
+          Name: '<green><u>Store'
           Lore:
-            - '&dBuy crate keys in our store'
-            - '&dand use them in this menu!'
-            - '&7'
-            - '&bOur Store: &awww.store.mycraft.com'
+            - '<light_purple>Buy crate keys in our store'
+            - '<light_purple>and use them in this menu!'
+            - '<gray>'
+            - '<aqua>Our Store: <green>www.store.mycraft.com'
     Slots: 34
     Type: NONE
