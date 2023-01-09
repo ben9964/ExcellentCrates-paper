@@ -34,8 +34,7 @@ repositories {
             includeGroup("me.clip")
         }
     }
-    maven {
-        url = uri("https://repo.codemc.io/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/maven-public/") {
         content {
             includeGroup("com.gmail.filoghost.holographicdisplays")
         }
