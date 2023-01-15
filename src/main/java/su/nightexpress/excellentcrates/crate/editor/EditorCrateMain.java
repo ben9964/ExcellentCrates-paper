@@ -347,7 +347,7 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                         .asComponent())
                     .toList();
 
-                item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, holo));
+                item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, holo, true));
             }
         }
 

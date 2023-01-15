@@ -125,7 +125,7 @@ public class CrateMenu extends AbstractLoadableItem<ExcellentCrates> implements 
 
             item.editMeta(meta -> {
                 ItemUtil.replaceNameAndLore(meta, crate.replacePlaceholders(), str -> str.replace("%user_keys%", String.valueOf(plugin.getKeyManager().getKeysAmount(player, crate))));
-                ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_ITEM_LORE, ItemUtil.getLore(crate.getItem()));
+                ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_ITEM_LORE, ItemUtil.getLore(crate.getItem()), true);
             });
         }
 
