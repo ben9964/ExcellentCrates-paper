@@ -96,7 +96,6 @@ tasks {
     }
 
     register("deployToServer") {
-        dependsOn(build)
         doLast {
             exec {
                 commandLine("rsync", jar.get().archiveFile.get().asFile.absoluteFile, "dev:data/dev/jar")
