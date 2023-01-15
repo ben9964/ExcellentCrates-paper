@@ -339,12 +339,10 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
         Enum<?> type = menuItem.getType();
         if (type != null) {
             if (type == CrateEditorType.CRATE_CHANGE_BLOCK_HOLOGRAM) {
+                // TODO Add hologram API that support MiniMessage strings
                 // Replace the `block hologram text` placeholder
                 List<Component> holo = this.crate.getBlockHologramText().stream()
-                    // TODO Add hologram API that support MiniMessage strings
-                    .map(line -> LegacyComponentSerializer.legacyAmpersand().deserialize(line) // The hologram API only support legacy color codes
-                        .color(NamedTextColor.WHITE)
-                        .asComponent())
+                    .map(line -> Component.text(line).color(NamedTextColor.WHITE).asComponent())
                     .toList();
 
                 item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, holo, true));
