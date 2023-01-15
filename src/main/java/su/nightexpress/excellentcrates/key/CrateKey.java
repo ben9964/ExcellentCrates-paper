@@ -25,8 +25,8 @@ import java.util.function.UnaryOperator;
 
 public class CrateKey extends AbstractLoadableItem<ExcellentCrates> implements IEditable, ICleanable, IPlaceholder {
 
-    private String    name;
-    private boolean   isVirtual;
+    private String name;
+    private boolean isVirtual;
     private ItemStack item;
 
     private EditorKeyMain editor;
@@ -75,7 +75,8 @@ public class CrateKey extends AbstractLoadableItem<ExcellentCrates> implements I
             .replace(Placeholders.KEY_ID, this.getId())
             .replace(Placeholders.KEY_NAME, this.getName())
             .replace(Placeholders.KEY_VIRTUAL, LangManager.getBoolean(this.isVirtual()))
-            .replace(Placeholders.KEY_ITEM_NAME, ComponentUtil.asMiniMessage(ItemUtil.getItemName(this.getItem())));
+            .replace(Placeholders.KEY_ITEM_NAME, ComponentUtil.asMiniMessage(ItemUtil.getName(this.getItem())))
+            ;
     }
 
     @Override

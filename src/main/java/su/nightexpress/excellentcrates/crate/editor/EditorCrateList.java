@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import su.nexmedia.engine.api.editor.EditorButtonType;
 import su.nexmedia.engine.api.editor.EditorInput;
@@ -45,10 +44,8 @@ public class EditorCrateList extends AbstractEditorMenuAuto<ExcellentCrates, Cra
             if (type instanceof MenuItemType type2) {
                 if (type2 == MenuItemType.RETURN) {
                     plugin.getEditor().open(player, 1);
-                }
-                else this.onItemClickDefault(player, type2);
-            }
-            else if (type instanceof CrateEditorType type2) {
+                } else this.onItemClickDefault(player, type2);
+            } else if (type instanceof CrateEditorType type2) {
                 if (type2 == CrateEditorType.CRATE_CREATE) {
                     EditorManager.startEdit(player, plugin.getCrateManager(), type2, input);
                     EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_ID).getLocalized());
@@ -84,15 +81,12 @@ public class EditorCrateList extends AbstractEditorMenuAuto<ExcellentCrates, Cra
     @NotNull
     protected ItemStack getObjectStack(@NotNull Player player, @NotNull Crate crate) {
         ItemStack item = new ItemStack(crate.getItem());
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-
-        ItemStack object = CrateEditorType.CRATE_OBJECT.getItem();
-        meta.displayName(ItemUtil.getItemName(object));
-        meta.lore(ItemUtil.getLore(object));
-        item.setItemMeta(meta);
-
-        ItemUtil.replace(item, crate.replacePlaceholders());
+        item.editMeta(meta -> {
+            ItemStack object = CrateEditorType.CRATE_OBJECT.getItem();
+            meta.displayName(ItemUtil.getName(object));
+            meta.lore(ItemUtil.getLore(object));
+            ItemUtil.replaceNameAndLore(meta, crate.replacePlaceholders());
+        });
         return item;
     }
 

@@ -68,7 +68,7 @@ public class HologramHandlerHD implements HologramHandler {
     public void createReward(@NotNull Player player, @NotNull CrateReward reward, @NotNull Location location) {
         this.removeReward(player);
 
-        Crate crate = reward.getCrate();
+        // Crate crate = reward.getCrate();
         Hologram hologram = HologramsAPI.createHologram(this.plugin, location);
         hologram.appendTextLine(reward.getName());
         hologram.appendItemLine(reward.getPreview());

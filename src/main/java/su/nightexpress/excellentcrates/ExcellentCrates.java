@@ -9,7 +9,7 @@ import su.nexmedia.engine.api.editor.EditorHolder;
 import su.nexmedia.engine.command.list.EditorSubCommand;
 import su.nexmedia.engine.command.list.ReloadSubCommand;
 import su.nexmedia.engine.hooks.Hooks;
-import su.nexmedia.engine.hooks.external.citizens.CitizensHook;
+import su.nexmedia.engine.hooks.npc.CitizensHook;
 import su.nightexpress.excellentcrates.api.hologram.HologramHandler;
 import su.nightexpress.excellentcrates.command.*;
 import su.nightexpress.excellentcrates.config.Config;
@@ -33,12 +33,12 @@ import java.sql.SQLException;
 public class ExcellentCrates extends NexPlugin<ExcellentCrates> implements UserDataHolder<ExcellentCrates, CrateUser>, EditorHolder<ExcellentCrates, CrateEditorType> {
 
     private CrateUserData dataHandler;
-    private UserManager   userManager;
+    private UserManager userManager;
 
     private CrateEditorMenu editor;
-    private KeyManager      keyManager;
-    private CrateManager     crateManager;
-    private MenuManager      menuManager;
+    private KeyManager keyManager;
+    private CrateManager crateManager;
+    private MenuManager menuManager;
 
     private HologramHandler hologramHandler;
 
@@ -103,8 +103,7 @@ public class ExcellentCrates extends NexPlugin<ExcellentCrates> implements UserD
     public void registerHooks() {
         if (Hooks.hasPlugin(HookId.HOLOGRAPHIC_DISPLAYS)) {
             this.hologramHandler = new HologramHandlerHD(this);
-        }
-        else if (Hooks.hasPlugin(HookId.DECENT_HOLOGRAMS)) {
+        } else if (Hooks.hasPlugin(HookId.DECENT_HOLOGRAMS)) {
             this.hologramHandler = new HologramHandlerDecent(this);
         }
 
@@ -140,8 +139,7 @@ public class ExcellentCrates extends NexPlugin<ExcellentCrates> implements UserD
         try {
             this.dataHandler = CrateUserData.getInstance(this);
             this.dataHandler.setup();
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }

@@ -49,8 +49,10 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
                 }
                 case REWARD_CHANGE_COMMANDS -> reward.getCommands().add(StringUtil.asPlainText(msg));
                 case REWARD_CHANGE_NAME -> reward.setName(msg);
-                case REWARD_CHANGE_WIN_LIMITS_AMOUNT -> reward.setWinLimitAmount(StringUtil.getInteger(StringUtil.asPlainText(msg), -1, true));
-                case REWARD_CHANGE_WIN_LIMITS_COOLDOWN -> reward.setWinLimitCooldown(StringUtil.getInteger(StringUtil.asPlainText(msg), 0, true));
+                case REWARD_CHANGE_WIN_LIMITS_AMOUNT ->
+                    reward.setWinLimitAmount(StringUtil.getInteger(StringUtil.asPlainText(msg), -1, true));
+                case REWARD_CHANGE_WIN_LIMITS_COOLDOWN ->
+                    reward.setWinLimitCooldown(StringUtil.getInteger(StringUtil.asPlainText(msg), 0, true));
                 default -> {}
             }
 
@@ -71,7 +73,7 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
                 switch (type2) {
                     case REWARD_CHANGE_NAME -> {
                         if (e.isRightClick()) {
-                            reward.setName(ComponentUtil.asMiniMessage(ItemUtil.getItemName(reward.getPreview())));
+                            reward.setName(ComponentUtil.asMiniMessage(ItemUtil.getName(reward.getPreview())));
                             break;
                         }
                         EditorManager.startEdit(player, reward, type2, input);
@@ -104,8 +106,7 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
                     case REWARD_CHANGE_COMMANDS -> {
                         if (e.isRightClick()) {
                             reward.getCommands().clear();
-                        }
-                        else {
+                        } else {
                             EditorManager.startEdit(player, reward, type2, input);
                             EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_REWARD_ENTER_COMMAND).getLocalized());
                             EditorManager.sendCommandTips(player);
@@ -122,15 +123,14 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
                         if (e.isLeftClick()) {
                             EditorManager.startEdit(player, reward, CrateEditorType.REWARD_CHANGE_WIN_LIMITS_AMOUNT, input);
                             EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_REWARD_ENTER_WIN_LIMIT_AMOUNT).getLocalized());
-                        }
-                        else {
+                        } else {
                             EditorManager.startEdit(player, reward, CrateEditorType.REWARD_CHANGE_WIN_LIMITS_COOLDOWN, input);
                             EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_REWARD_ENTER_WIN_LIMIT_COOLDOWN).getLocalized());
                         }
                         player.closeInventory();
                         return;
                     }
-                    default -> { }
+                    default -> {}
                 }
                 crate.save();
                 this.open(player, 1);
@@ -164,7 +164,7 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
             item.setAmount(this.object.getPreview().getAmount());
         }
 
-        ItemUtil.replace(item, this.object.replacePlaceholders());
+        item.editMeta(meta -> ItemUtil.replaceNameAndLore(meta, this.object.replacePlaceholders()));
     }
 
     @Override

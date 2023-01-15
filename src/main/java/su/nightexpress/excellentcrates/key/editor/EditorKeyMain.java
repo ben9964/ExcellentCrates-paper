@@ -88,7 +88,7 @@ public class EditorKeyMain extends AbstractEditorMenu<ExcellentCrates, CrateKey>
             item.setType(this.object.getItem().getType());
         }
 
-        ItemUtil.replace(item, this.object.replacePlaceholders());
+        item.editMeta(meta -> ItemUtil.replaceNameAndLore(meta, this.object.replacePlaceholders()));
     }
 
     @Override

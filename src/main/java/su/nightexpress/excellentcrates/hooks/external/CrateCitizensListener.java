@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.jetbrains.annotations.NotNull;
 import su.nexmedia.engine.api.type.ClickType;
-import su.nexmedia.engine.hooks.external.citizens.CitizensListener;
+import su.nexmedia.engine.hooks.npc.CitizensListener;
 import su.nightexpress.excellentcrates.ExcellentCrates;
 import su.nightexpress.excellentcrates.api.CrateClickAction;
 import su.nightexpress.excellentcrates.config.Config;

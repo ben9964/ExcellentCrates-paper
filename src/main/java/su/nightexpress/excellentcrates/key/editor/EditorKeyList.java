@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import su.nexmedia.engine.api.editor.EditorButtonType;
 import su.nexmedia.engine.api.editor.EditorInput;
@@ -45,10 +44,8 @@ public class EditorKeyList extends AbstractEditorMenuAuto<ExcellentCrates, KeyMa
             if (type instanceof MenuItemType type2) {
                 if (type2 == MenuItemType.RETURN) {
                     plugin.getEditor().open(player, 1);
-                }
-                else this.onItemClickDefault(player, type2);
-            }
-            else if (type instanceof CrateEditorType type2) {
+                } else this.onItemClickDefault(player, type2);
+            } else if (type instanceof CrateEditorType type2) {
                 if (type2 == CrateEditorType.KEY_CREATE) {
                     EditorManager.startEdit(player, plugin.getKeyManager(), type2, input);
                     EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_ID).getLocalized());
@@ -84,16 +81,13 @@ public class EditorKeyList extends AbstractEditorMenuAuto<ExcellentCrates, KeyMa
     @NotNull
     protected ItemStack getObjectStack(@NotNull Player player, @NotNull CrateKey key) {
         ItemStack item = new ItemStack(key.getItem());
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-
-        ItemStack object = CrateEditorType.KEY_OBJECT.getItem();
-        meta.displayName(ItemUtil.getItemName(object));
-        meta.lore(ItemUtil.getLore(object));
-        meta.addItemFlags(ItemFlag.values());
-        item.setItemMeta(meta);
-
-        ItemUtil.replace(item, key.replacePlaceholders());
+        item.editMeta(meta -> {
+            ItemStack object = CrateEditorType.KEY_OBJECT.getItem();
+            meta.displayName(ItemUtil.getName(object));
+            meta.lore(ItemUtil.getLore(object));
+            meta.addItemFlags(ItemFlag.values());
+            ItemUtil.replaceNameAndLore(meta, key.replacePlaceholders());
+        });
         return item;
     }
 

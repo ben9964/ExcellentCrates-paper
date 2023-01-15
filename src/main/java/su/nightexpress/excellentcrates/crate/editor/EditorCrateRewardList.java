@@ -6,7 +6,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import su.nexmedia.engine.api.editor.EditorButtonType;
 import su.nexmedia.engine.api.editor.EditorInput;
@@ -55,20 +54,18 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
             if (type instanceof MenuItemType type2) {
                 if (type2 == MenuItemType.RETURN) {
                     crate.getEditor().open(player, 1);
-                }
-                else this.onItemClickDefault(player, type2);
-            }
-            else if (type instanceof CrateEditorType type2) {
+                } else this.onItemClickDefault(player, type2);
+            } else if (type instanceof CrateEditorType type2) {
                 if (type2 == CrateEditorType.REWARD_CREATE) {
                     ItemStack cursor = e.getCursor();
                     if (cursor != null && !cursor.getType().isAir()) {
-                        String id = EditorManager.fineId(ComponentUtil.asPlainText(ItemUtil.getItemName(cursor)));
+                        String id = EditorManager.fineId(ComponentUtil.asPlainText(ItemUtil.getName(cursor)));
                         int count = 0;
                         while (crate.getReward(count == 0 ? id : id + count) != null) {
                             count++;
                         }
                         CrateReward reward = new CrateReward(this.parent, count == 0 ? id : id + count);
-                        reward.setName(ComponentUtil.asMiniMessage(ItemUtil.getItemName(cursor)));
+                        reward.setName(ComponentUtil.asMiniMessage(ItemUtil.getName(cursor)));
                         reward.addItem(new ItemStack(cursor));
                         reward.setPreview(cursor);
                         crate.addReward(reward);
@@ -81,18 +78,15 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
                     EditorManager.startEdit(player, crate, type2, input);
                     EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_REWARD_ENTER_ID).getLocalized());
                     player.closeInventory();
-                }
-                else if (type2 == CrateEditorType.REWARD_SORT) {
+                } else if (type2 == CrateEditorType.REWARD_SORT) {
                     Comparator<CrateReward> comparator;
                     if (e.isShiftClick()) {
-                        //if (e.isLeftClick()) {
-                            comparator = Comparator.comparing(r -> ComponentUtil.asPlainText(ItemUtil.getItemName(r.getPreview())));
+                        // if (e.isLeftClick()) {
+                        comparator = Comparator.comparing(r -> ComponentUtil.asPlainText(ItemUtil.getName(r.getPreview())));
                         //}
-                    }
-                    else if (e.isRightClick()) {
+                    } else if (e.isRightClick()) {
                         comparator = Comparator.comparing(r -> r.getPreview().getType().name());
-                    }
-                    else {
+                    } else {
                         comparator = Comparator.comparingDouble(CrateReward::getChance).reversed();
                     }
                     crate.setRewards(crate.getRewards().stream().sorted(comparator).toList());
@@ -129,16 +123,13 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
     @NotNull
     protected ItemStack getObjectStack(@NotNull Player player, @NotNull CrateReward reward) {
         ItemStack item = new ItemStack(reward.getPreview());
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-
-        ItemStack object = CrateEditorType.REWARD_OBJECT.getItem();
-        meta.displayName(ItemUtil.getItemName(object));
-        meta.lore(ItemUtil.getLore(object));
-        meta.addItemFlags(ItemFlag.values());
-        item.setItemMeta(meta);
-
-        ItemUtil.replace(item, reward.replacePlaceholders());
+        item.editMeta(meta -> {
+            ItemStack object = CrateEditorType.REWARD_OBJECT.getItem();
+            meta.displayName(ItemUtil.getName(object));
+            meta.lore(ItemUtil.getLore(object));
+            meta.addItemFlags(ItemFlag.values());
+            ItemUtil.replaceNameAndLore(meta, reward.replacePlaceholders());
+        });
         return item;
     }
 
@@ -164,8 +155,7 @@ public class EditorCrateRewardList extends AbstractEditorMenuAuto<ExcellentCrate
 
                     all.remove(index);
                     all.add(index + 1, reward);
-                }
-                else if (e.isRightClick()) {
+                } else if (e.isRightClick()) {
                     if (index == 0) return;
 
                     all.remove(index);

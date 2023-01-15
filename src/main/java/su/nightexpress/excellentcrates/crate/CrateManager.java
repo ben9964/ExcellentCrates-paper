@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import su.nexmedia.engine.api.config.JYML;
 import su.nexmedia.engine.api.manager.AbstractManager;
 import su.nexmedia.engine.api.menu.AbstractMenu;
-import su.nexmedia.engine.hooks.external.VaultHook;
+import su.nexmedia.engine.hooks.misc.VaultHook;
 import su.nexmedia.engine.utils.LocationUtil;
 import su.nexmedia.engine.utils.PDCUtil;
 import su.nexmedia.engine.utils.PlayerUtil;
@@ -59,8 +59,7 @@ public class CrateManager extends AbstractManager<ExcellentCrates> {
                 OpeningMenu opening = new OpeningMenu(plugin, cfg);
                 String id = cfg.getFile().getName().replace(".yml", "").toLowerCase();
                 this.openings.put(id, opening);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 this.plugin.error("Crate opening not loaded: " + cfg.getFile().getName());
                 e.printStackTrace();
             }
@@ -71,8 +70,7 @@ public class CrateManager extends AbstractManager<ExcellentCrates> {
                 Crate crate = new Crate(plugin, cfg);
                 if (crate.load()) {
                     this.crates.put(crate.getId(), crate);
-                }
-                else {
+                } else {
                     this.plugin.error("Crate not loaded: " + cfg.getFile().getName());
                 }
             }
@@ -198,7 +196,7 @@ public class CrateManager extends AbstractManager<ExcellentCrates> {
     }
 
     public void interactCrate(@NotNull Player player, @NotNull Crate crate, @NotNull CrateClickAction action,
-                              @Nullable ItemStack item, @Nullable Block block) {
+        @Nullable ItemStack item, @Nullable Block block) {
 
         player.closeInventory();
 
@@ -287,14 +285,12 @@ public class CrateManager extends AbstractManager<ExcellentCrates> {
         if (openCostExp > 0) player.setLevel(player.getLevel() - (int) openCostExp);
 
 
-
         String animationConfig = crate.getOpeningConfig();
         OpeningMenu opening = animationConfig == null ? null : this.getOpening(animationConfig);
         if (opening != null) {
-            //animation.open(player, crate);
+            // animation.open(player, crate);
             opening.open(player, crate);
-        }
-        else {
+        } else {
             CrateReward reward = crate.rollReward(player);
             if (reward != null) {
                 reward.give(player);

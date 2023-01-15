@@ -1,5 +1,8 @@
 package su.nightexpress.excellentcrates.crate.editor;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -23,6 +26,7 @@ import su.nexmedia.engine.editor.EditorManager;
 import su.nexmedia.engine.hooks.Hooks;
 import su.nexmedia.engine.utils.*;
 import su.nightexpress.excellentcrates.ExcellentCrates;
+import su.nightexpress.excellentcrates.Placeholders;
 import su.nightexpress.excellentcrates.api.OpenCostType;
 import su.nightexpress.excellentcrates.config.Config;
 import su.nightexpress.excellentcrates.config.Lang;
@@ -98,9 +102,11 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                     }
                     crate2.setOpenCost(OpenCostType.EXP, (int) costExp);
                 }
-                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_NAME -> crate2.getBlockEffect().setParticleName(StringUtil.asPlainText(msg));
-                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_DATA -> crate2.getBlockEffect().setParticleData(StringUtil.asPlainText(msg));
-                default -> { }
+                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_NAME ->
+                    crate2.getBlockEffect().setParticleName(StringUtil.asPlainText(msg));
+                case CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_DATA ->
+                    crate2.getBlockEffect().setParticleData(StringUtil.asPlainText(msg));
+                default -> {}
             }
 
             crate2.save();
@@ -112,8 +118,7 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                 if (type2 == MenuItemType.RETURN) {
                     this.plugin.getEditor().getCratesEditor().open(player, 1);
                 }
-            }
-            else if (type instanceof CrateEditorType type2) {
+            } else if (type instanceof CrateEditorType type2) {
                 switch (type2) {
                     case CRATE_CHANGE_PERMISSION -> crate.setPermissionRequired(!crate.isPermissionRequired());
                     case CRATE_CHANGE_BLOCK_HOLOGRAM -> {
@@ -121,22 +126,19 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                             if (e.isLeftClick()) {
                                 crate.setBlockHologramEnabled(!crate.isBlockHologramEnabled());
                                 crate.updateHologram();
-                            }
-                            else if (e.isRightClick()) {
+                            } else if (e.isRightClick()) {
                                 EditorManager.startEdit(player, crate, CrateEditorType.CRATE_CHANGE_BLOCK_HOLOGRAM_OFFSET_Y, input);
                                 EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_BLOCK_HOLOGRAM_OFFSET).getLocalized());
                                 player.closeInventory();
                                 return;
                             }
-                        }
-                        else {
+                        } else {
                             if (e.isLeftClick()) {
                                 EditorManager.startEdit(player, crate, CrateEditorType.CRATE_CHANGE_BLOCK_HOLOGRAM_TEXT, input);
                                 EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_BLOCK_HOLOGRAM_TEXT).getLocalized());
                                 player.closeInventory();
                                 return;
-                            }
-                            else if (e.isRightClick()) {
+                            } else if (e.isRightClick()) {
                                 crate.setBlockHologramText(new ArrayList<>());
                                 crate.updateHologram();
                             }
@@ -164,8 +166,7 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                             EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_BLOCK_LOCATION).getLocalized());
                             player.closeInventory();
                             return;
-                        }
-                        else {
+                        } else {
                             crate.getBlockLocations().clear();
                             crate.updateHologram();
                         }
@@ -174,13 +175,11 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                         if (e.getClick() == ClickType.DROP) {
                             CrateEffectSettings effect = crate.getBlockEffect();
                             effect.setModel(CollectionsUtil.switchEnum(effect.getModel()));
-                        }
-                        else {
+                        } else {
                             if (e.isRightClick()) {
                                 EditorManager.startEdit(player, crate, CrateEditorType.CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_DATA, input);
                                 EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_PARTICLE_DATA).getLocalized());
-                            }
-                            else if (e.isLeftClick()) {
+                            } else if (e.isLeftClick()) {
                                 EditorManager.startEdit(player, crate, CrateEditorType.CRATE_CHANGE_BLOCK_EFFECT_PARTICLE_NAME, input);
                                 EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_PARTICLE_NAME).getLocalized());
 
@@ -232,8 +231,7 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                             EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_CITIZENS).getLocalized());
                             player.closeInventory();
                             return;
-                        }
-                        else if (e.isRightClick()) {
+                        } else if (e.isRightClick()) {
                             crate.setAttachedCitizens(new int[0]);
                         }
                     }
@@ -249,8 +247,7 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                             EditorManager.startEdit(player, crate, CrateEditorType.CRATE_CHANGE_CONFIG_PREVIEW, input);
                             EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_PREVIEW_CONFIG).getLocalized());
                             EditorManager.suggestValues(player, previews, true);
-                        }
-                        else {
+                        } else {
                             if (e.isRightClick()) {
                                 crate.setOpeningConfig(null);
                                 break;
@@ -266,18 +263,15 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
                         if (e.isShiftClick()) {
                             if (e.isLeftClick()) {
                                 crate.setOpenCost(OpenCostType.MONEY, 0D);
-                            }
-                            else {
+                            } else {
                                 crate.setOpenCost(OpenCostType.EXP, 0);
                             }
                             break;
-                        }
-                        else {
+                        } else {
                             if (e.isLeftClick()) {
                                 EditorManager.startEdit(player, crate, CrateEditorType.CRATE_CHANGE_OPEN_COST_MONEY, input);
                                 EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_OPEN_COST_MONEY).getLocalized());
-                            }
-                            else if (e.isRightClick()) {
+                            } else if (e.isRightClick()) {
                                 EditorManager.startEdit(player, crate, CrateEditorType.CRATE_CHANGE_OPEN_COST_EXP, input);
                                 EditorManager.tip(player, plugin.getMessage(Lang.EDITOR_CRATE_ENTER_OPEN_COST_EXP).getLocalized());
                             }
@@ -341,7 +335,23 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
     @Override
     public void onItemPrepare(@NotNull Player player, @NotNull MenuItem menuItem, @NotNull ItemStack item) {
         super.onItemPrepare(player, menuItem, item);
-        ItemUtil.replace(item, this.crate.replacePlaceholders());
+
+        Enum<?> type = menuItem.getType();
+        if (type != null) {
+            if (type == CrateEditorType.CRATE_CHANGE_BLOCK_HOLOGRAM) {
+                // Replace the `block hologram text` placeholder
+                List<Component> holo = this.crate.getBlockHologramText().stream()
+                    // TODO Add hologram API that support MiniMessage strings
+                    .map(line -> LegacyComponentSerializer.legacyAmpersand().deserialize(line) // The hologram API only support legacy color codes
+                        .color(NamedTextColor.WHITE)
+                        .asComponent())
+                    .toList();
+
+                item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, holo));
+            }
+        }
+
+        item.editMeta(meta -> ItemUtil.replaceNameAndLore(meta, this.crate.replacePlaceholders()));
     }
 
     @Override

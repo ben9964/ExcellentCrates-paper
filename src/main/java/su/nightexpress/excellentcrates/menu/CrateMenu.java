@@ -3,7 +3,6 @@ package su.nightexpress.excellentcrates.menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import su.nexmedia.engine.api.config.JYML;
 import su.nexmedia.engine.api.manager.AbstractLoadableItem;
@@ -121,14 +120,13 @@ public class CrateMenu extends AbstractLoadableItem<ExcellentCrates> implements 
         public void onItemPrepare(@NotNull Player player, @NotNull MenuItem menuItem, @NotNull ItemStack item) {
             super.onItemPrepare(player, menuItem, item);
 
-            ItemMeta meta = item.getItemMeta();
-            if (meta == null) return;
-
             Crate crate = plugin.getCrateManager().getCrateById(menuItem.getId());
             if (crate == null) return;
 
-            ItemUtil.replace(item, crate.replacePlaceholders());
-            ItemUtil.replace(item, str -> str.replace("%user_keys%", String.valueOf(plugin.getKeyManager().getKeysAmount(player, crate))));
+            item.editMeta(meta -> {
+                ItemUtil.replaceNameAndLore(meta, crate.replacePlaceholders(), str -> str.replace("%user_keys%", String.valueOf(plugin.getKeyManager().getKeysAmount(player, crate))));
+                ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_ITEM_LORE, ItemUtil.getLore(crate.getItem()));
+            });
         }
 
         @Override

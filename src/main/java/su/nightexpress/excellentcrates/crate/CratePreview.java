@@ -3,7 +3,6 @@ package su.nightexpress.excellentcrates.crate;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import su.nexmedia.engine.api.config.JYML;
 import su.nexmedia.engine.api.menu.AbstractMenuAuto;
@@ -20,21 +19,22 @@ import su.nightexpress.excellentcrates.data.UserRewardWinLimit;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward> {
 
-    private static final String PLACEHOLDER_WIN_LIMIT_AMOUNT   = "%win_limit_amount%";
+    private static final String PLACEHOLDER_WIN_LIMIT_AMOUNT = "%win_limit_amount%";
     private static final String PLACEHOLDER_WIN_LIMIT_COOLDOWN = "%win_limit_cooldown%";
-    private static final String PLACEHOLDER_WIN_LIMIT_DRAINED  = "%win_limit_drained%";
+    private static final String PLACEHOLDER_WIN_LIMIT_DRAINED = "%win_limit_drained%";
 
     private final Crate crate;
-    private final int[]        rewardSlots;
-    private final String       rewardName;
+    private final int[] rewardSlots;
+    private final String rewardName;
     private final List<String> rewardLore;
     private final List<String> rewardLoreLimitAmount;
     private final List<String> rewardLoreLimitCoolown;
     private final List<String> rewardLoreLimitDrained;
-    private final boolean      hideDrainedRewards;
+    private final boolean hideDrainedRewards;
 
     public CratePreview(@NotNull Crate crate, @NotNull JYML cfg) {
         super(crate.plugin(), cfg, "");
@@ -53,8 +53,7 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
             if (type instanceof MenuItemType type2) {
                 if (type2 == MenuItemType.CLOSE) {
                     player.closeInventory();
-                }
-                else this.onItemClickDefault(player, type2);
+                } else this.onItemClickDefault(player, type2);
             }
         };
 
@@ -82,40 +81,46 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
     @Override
     @NotNull
     protected ItemStack getObjectStack(@NotNull Player player, @NotNull CrateReward reward) {
-        ItemStack item = reward.getPreview();
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
+        CrateUser user = plugin.getUserManager().getUserData(player);
+        UserRewardWinLimit rewardLimit = user.getRewardWinLimit(reward);
 
-        CrateUser crateUser = plugin.getUserManager().getUserData(player);
-        UserRewardWinLimit rewardLimit = crateUser.getRewardWinLimit(reward);
+        UnaryOperator<String> replacer1 = user.replacePlaceholers(reward);
+        UnaryOperator<String> replacer2 = reward.replacePlaceholders();
+        UnaryOperator<String> replacer3 = this.crate.replacePlaceholders();
 
+        // Prepare preview item name
+        final String finalName = StringUtil.replace(this.rewardName, replacer1, replacer2, replacer3);
+
+        // Prepare preview item lore
         List<String> lore = new ArrayList<>(this.rewardLore);
         if (rewardLimit == null || rewardLimit.isDrained(reward) || !reward.isWinLimitedAmount())
             lore.remove(PLACEHOLDER_WIN_LIMIT_AMOUNT);
         if (rewardLimit == null || rewardLimit.isDrained(reward) || rewardLimit.isExpired())
             lore.remove(PLACEHOLDER_WIN_LIMIT_COOLDOWN);
-        if (rewardLimit == null || !rewardLimit.isDrained(reward)) lore.remove(PLACEHOLDER_WIN_LIMIT_DRAINED);
+        if (rewardLimit == null || !rewardLimit.isDrained(reward))
+            lore.remove(PLACEHOLDER_WIN_LIMIT_DRAINED);
+        lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_AMOUNT, lore, this.rewardLoreLimitAmount);
+        lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_COOLDOWN, lore, this.rewardLoreLimitCoolown);
+        lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_DRAINED, lore, this.rewardLoreLimitDrained);
+        lore = StringUtil.replacePlaceholderList(Placeholders.REWARD_PREVIEW_LORE, lore, ComponentUtil.asMiniMessage(ItemUtil.getLore(reward.getPreview())));
+        lore = StringUtil.replace(lore, replacer1, replacer2, replacer3);
+        lore = StringUtil.compressEmptyLines(lore);
+        final List<String> finalLore = lore;
 
-        lore = StringUtil.replace(lore, PLACEHOLDER_WIN_LIMIT_AMOUNT, false, this.rewardLoreLimitAmount);
-        lore = StringUtil.replace(lore, PLACEHOLDER_WIN_LIMIT_COOLDOWN, false, this.rewardLoreLimitCoolown);
-        lore = StringUtil.replace(lore, PLACEHOLDER_WIN_LIMIT_DRAINED, false, this.rewardLoreLimitDrained);
-        lore.replaceAll(crateUser.replacePlaceholers(reward));
+        // Apply to item meta
+        ItemStack item = reward.getPreview();
+        item.editMeta(meta -> {
+            meta.displayName(ComponentUtil.asComponent(finalName));
+            meta.lore(ComponentUtil.asComponent(finalLore));
+        });
 
-        meta.displayName(ComponentUtil.asComponent(this.rewardName));
-        meta.lore(ComponentUtil.asComponent(lore));
-        item.setItemMeta(meta);
-
-        ItemUtil.replace(item, reward.replacePlaceholders());
-        ItemUtil.replace(item, this.crate.replacePlaceholders());
         return item;
     }
 
     @Override
     @NotNull
     protected MenuClick getObjectClick(@NotNull Player player, @NotNull CrateReward reward) {
-        return (player1, type, e) -> {
-
-        };
+        return (player1, type, e) -> {};
     }
 
     @Override

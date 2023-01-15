@@ -34,28 +34,28 @@ import java.util.stream.Stream;
 
 public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICleanable, IEditable, IPlaceholder {
 
-    private String  name;
-    private String  openingConfig;
-    private String  previewConfig;
+    private String name;
+    private String openingConfig;
+    private String previewConfig;
     private boolean isPermissionRequired;
-    private int[]   attachedCitizens;
+    private int[] attachedCitizens;
 
-    private       int                       openCooldown;
+    private int openCooldown;
     private final Map<OpenCostType, Double> openCostType;
 
     private Set<String> keyIds;
-    private ItemStack   item;
+    private ItemStack item;
 
-    private Set<Location>       blockLocations;
-    private boolean             blockPushbackEnabled;
-    private boolean             blockHologramEnabled;
-    private double              blockHologramOffsetY;
-    private List<String>        blockHologramText;
+    private Set<Location> blockLocations;
+    private boolean blockPushbackEnabled;
+    private boolean blockHologramEnabled;
+    private double blockHologramOffsetY;
+    private List<String> blockHologramText;
     private CrateEffectSettings blockEffect;
 
     private LinkedHashMap<String, CrateReward> rewardMap;
 
-    private CratePreview    preview;
+    private CratePreview preview;
     private EditorCrateMain editor;
 
     public Crate(@NotNull ExcellentCrates plugin, @NotNull String id) {
@@ -182,8 +182,8 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
             cfg.setItemsEncoded(path + "Items", reward.getItems());
         }
 
-        //this.createPreview();
-        //this.updateHologram();
+        // this.createPreview();
+        // this.updateHologram();
     }
 
     @Override
@@ -201,12 +201,12 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
             .replace(Placeholders.CRATE_OPENING_COST_EXP, NumberUtil.format(this.getOpenCost(OpenCostType.EXP)))
             .replace(Placeholders.CRATE_OPENING_COST_MONEY, NumberUtil.format(this.getOpenCost(OpenCostType.MONEY)))
             .replace(Placeholders.CRATE_KEY_IDS, String.join(DELIMITER_DEFAULT, this.getKeyIds()))
-            .replace(Placeholders.CRATE_ITEM_NAME, ComponentUtil.asMiniMessage(ItemUtil.getItemName(this.getItem())))
-            .replace(Placeholders.CRATE_ITEM_LORE, String.join("\n", ComponentUtil.asMiniMessage(ItemUtil.getLore(this.getItem()))))
+            .replace(Placeholders.CRATE_ITEM_NAME, ComponentUtil.asMiniMessage(ItemUtil.getName(this.getItem())))
+            // .replace(Placeholders.CRATE_ITEM_LORE, String.join("\n", ComponentUtil.asMiniMessage(ItemUtil.getLore(this.getItem()))))
             .replace(Placeholders.CRATE_BLOCK_PUSHBACK_ENABLED, LangManager.getBoolean(this.isBlockPushbackEnabled()))
             .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_ENABLED, LangManager.getBoolean(this.isBlockHologramEnabled()))
             .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_OFFSET_Y, NumberUtil.format(this.getBlockHologramOffsetY()))
-            .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, String.join("|", this.getBlockHologramText()))
+            // .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, String.join("\n", this.getBlockHologramText()))
             .replace(Placeholders.CRATE_BLOCK_LOCATIONS, String.join(DELIMITER_DEFAULT, this.getBlockLocations().stream().map(location -> {
                 String x = NumberUtil.format(location.getX());
                 String y = NumberUtil.format(location.getY());

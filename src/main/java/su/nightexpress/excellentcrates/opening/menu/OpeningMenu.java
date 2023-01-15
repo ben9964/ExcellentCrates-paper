@@ -15,6 +15,7 @@ import su.nexmedia.engine.api.config.JYML;
 import su.nexmedia.engine.api.menu.AbstractMenu;
 import su.nexmedia.engine.api.menu.MenuClick;
 import su.nexmedia.engine.api.menu.MenuItem;
+import su.nexmedia.engine.api.menu.MenuItemImpl;
 import su.nexmedia.engine.utils.StringUtil;
 import su.nightexpress.excellentcrates.ExcellentCrates;
 import su.nightexpress.excellentcrates.crate.Crate;
@@ -32,7 +33,7 @@ import java.util.Map;
 
 public class OpeningMenu extends AbstractMenu<ExcellentCrates> {
 
-    private final Map<String, SliderInfo>    sliders;
+    private final Map<String, SliderInfo> sliders;
     private final Map<String, AnimationInfo> animations;
 
     public OpeningMenu(@NotNull ExcellentCrates plugin, @NotNull JYML cfg) {
@@ -70,9 +71,7 @@ public class OpeningMenu extends AbstractMenu<ExcellentCrates> {
             Sound soundTick = cfg.getEnum(path2 + "Tick_Sound", Sound.class);
 
             List<ItemStack> items = new ArrayList<>();
-            cfg.getSection(path2 + "Items").forEach(sId2 -> {
-                items.add(cfg.getItem(path2 + "Items." + sId2));
-            });
+            cfg.getSection(path2 + "Items").forEach(sId2 -> items.add(cfg.getItem(path2 + "Items." + sId2)));
 
             AnimationInfo item = new AnimationInfo(sId, startAction, startDelay, slots, mode, tickInterval, soundTick, items);
             this.animations.put(item.getId(), item);
@@ -175,7 +174,7 @@ public class OpeningMenu extends AbstractMenu<ExcellentCrates> {
         return true;
     }
 
-    static class CrateMenuItem extends MenuItem {
+    static class CrateMenuItem extends MenuItemImpl {
 
         private String[] rewardId;
         private String[] animationId;
