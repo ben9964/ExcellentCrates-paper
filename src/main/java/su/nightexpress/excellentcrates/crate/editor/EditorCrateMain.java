@@ -2,7 +2,6 @@ package su.nightexpress.excellentcrates.crate.editor;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -337,16 +336,24 @@ public class EditorCrateMain extends AbstractEditorMenu<ExcellentCrates, Crate> 
         super.onItemPrepare(player, menuItem, item);
 
         Enum<?> type = menuItem.getType();
-        if (type != null) {
-            if (type == CrateEditorType.CRATE_CHANGE_BLOCK_HOLOGRAM) {
-                // TODO Add hologram API that support MiniMessage strings
-                // Replace the `block hologram text` placeholder
-                List<Component> holo = this.crate.getBlockHologramText().stream()
-                    .map(line -> Component.text(line).color(NamedTextColor.WHITE).asComponent())
-                    .toList();
-
-                item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, holo, true));
-            }
+        if (type == CrateEditorType.CRATE_CHANGE_BLOCK_HOLOGRAM) {
+            // Replace the `hologram text` placeholder list
+            List<Component> holoLines = this.crate.getBlockHologramText().stream().map(line -> Component.text(line).color(NamedTextColor.WHITE).asComponent()).toList();
+            item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, holoLines, true));
+        } else if (type == CrateEditorType.CRATE_CHANGE_KEYS) {
+            // Replace the `crate key ids` placeholder list
+            List<Component> keyIds = this.crate.getKeyIds().stream().map(line -> Component.text(line).color(NamedTextColor.WHITE).asComponent()).toList();
+            item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_KEY_IDS, keyIds, true));
+        } else if (type == CrateEditorType.CRATE_CHANGE_BLOCK_LOCATION) {
+            // Replace the `crate block locations` placeholder list
+            List<Component> blockLocations = this.crate.getBlockLocations().stream().map(location -> {
+                String x = NumberUtil.format(location.getX());
+                String y = NumberUtil.format(location.getY());
+                String z = NumberUtil.format(location.getZ());
+                String world = location.getWorld() == null ? "null" : location.getWorld().getName();
+                return Component.text(x + ", " + y + ", " + z + " in " + world).color(NamedTextColor.WHITE).asComponent();
+            }).toList();
+            item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.CRATE_BLOCK_LOCATIONS, blockLocations, true));
         }
 
         item.editMeta(meta -> ItemUtil.replaceNameAndLore(meta, this.crate.replacePlaceholders()));

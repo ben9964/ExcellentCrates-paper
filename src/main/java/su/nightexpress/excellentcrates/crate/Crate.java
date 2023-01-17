@@ -200,20 +200,20 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
             .replace(Placeholders.CRATE_OPENING_COOLDOWN, TimeUtil.formatTime(this.getOpenCooldown() * 1000L))
             .replace(Placeholders.CRATE_OPENING_COST_EXP, NumberUtil.format(this.getOpenCost(OpenCostType.EXP)))
             .replace(Placeholders.CRATE_OPENING_COST_MONEY, NumberUtil.format(this.getOpenCost(OpenCostType.MONEY)))
-            .replace(Placeholders.CRATE_KEY_IDS, String.join(DELIMITER_DEFAULT, this.getKeyIds()))
+            // .replace(Placeholders.CRATE_KEY_IDS, String.join(DELIMITER_DEFAULT, this.getKeyIds()))
             .replace(Placeholders.CRATE_ITEM_NAME, ComponentUtil.asMiniMessage(ItemUtil.getName(this.getItem())))
             // .replace(Placeholders.CRATE_ITEM_LORE, String.join("\n", ComponentUtil.asMiniMessage(ItemUtil.getLore(this.getItem()))))
             .replace(Placeholders.CRATE_BLOCK_PUSHBACK_ENABLED, LangManager.getBoolean(this.isBlockPushbackEnabled()))
             .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_ENABLED, LangManager.getBoolean(this.isBlockHologramEnabled()))
             .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_OFFSET_Y, NumberUtil.format(this.getBlockHologramOffsetY()))
             // .replace(Placeholders.CRATE_BLOCK_HOLOGRAM_TEXT, String.join("\n", this.getBlockHologramText()))
-            .replace(Placeholders.CRATE_BLOCK_LOCATIONS, String.join(DELIMITER_DEFAULT, this.getBlockLocations().stream().map(location -> {
-                String x = NumberUtil.format(location.getX());
-                String y = NumberUtil.format(location.getY());
-                String z = NumberUtil.format(location.getZ());
-                String world = location.getWorld() == null ? "null" : location.getWorld().getName();
-                return x + ", " + y + ", " + z + " in " + world;
-            }).toList()))
+            // .replace(Placeholders.CRATE_BLOCK_LOCATIONS, String.join(DELIMITER_DEFAULT, this.getBlockLocations().stream().map(location -> {
+            //     String x = NumberUtil.format(location.getX());
+            //     String y = NumberUtil.format(location.getY());
+            //     String z = NumberUtil.format(location.getZ());
+            //     String world = location.getWorld() == null ? "null" : location.getWorld().getName();
+            //     return x + ", " + y + ", " + z + " in " + world;
+            // }).toList()))
             .replace(Placeholders.CRATE_BLOCK_EFFECT_MODEL, this.getBlockEffect().getModel().name())
             .replace(Placeholders.CRATE_BLOCK_EFFECT_PARTICLE_NAME, this.getBlockEffect().getParticleName())
             .replace(Placeholders.CRATE_BLOCK_EFFECT_PARTICLE_DATA, this.getBlockEffect().getParticleData());

@@ -20,6 +20,7 @@ import su.nightexpress.excellentcrates.data.UserRewardWinLimit;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.function.UnaryOperator;
 
 public class CrateReward implements IEditable, ICleanable, IPlaceholder {
@@ -104,7 +105,7 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
             .replace(Placeholders.REWARD_BROADCAST, LangManager.getBoolean(this.isBroadcast()))
             .replace(Placeholders.REWARD_PREVIEW_NAME, ComponentUtil.asMiniMessage(ItemUtil.getName(this.getPreview())))
             // .replace(Placeholders.REWARD_PREVIEW_LORE, String.join("\n", ComponentUtil.asMiniMessage(ItemUtil.getLore(this.getPreview()))))
-            .replace(Placeholders.REWARD_COMMANDS, String.join(DELIMITER_DEFAULT, this.getCommands()))
+            // .replace(Placeholders.REWARD_COMMANDS, String.join(DELIMITER_DEFAULT, this.getCommands()))
             .replace(Placeholders.REWARD_WIN_LIMIT_AMOUNT, winAmount)
             .replace(Placeholders.REWARD_WIN_LIMIT_COOLDOWN, winCooldown)
             ;
@@ -229,10 +230,11 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
         this.items.removeIf(item -> item == null || item.getType().isAir());
 
         // Custom plugin item integration - start
-        for (int i = 0; i < items.size(); i++) {
-            ItemStack itemStack = items.get(i);
+        ListIterator<ItemStack> it = items.listIterator();
+        while (it.hasNext()) {
+            ItemStack itemStack = it.next();
             itemStack = NexEngine.get().getPluginItemRegistry().refreshItemStack(itemStack);
-            items.set(i, itemStack);
+            it.set(itemStack);
         }
         // Custom plugin item integration - end
     }

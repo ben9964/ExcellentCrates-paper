@@ -1,5 +1,7 @@
 package su.nightexpress.excellentcrates.crate.editor;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -21,6 +23,7 @@ import su.nexmedia.engine.utils.ItemUtil;
 import su.nexmedia.engine.utils.PlayerUtil;
 import su.nexmedia.engine.utils.StringUtil;
 import su.nightexpress.excellentcrates.ExcellentCrates;
+import su.nightexpress.excellentcrates.Placeholders;
 import su.nightexpress.excellentcrates.config.Lang;
 import su.nightexpress.excellentcrates.crate.Crate;
 import su.nightexpress.excellentcrates.crate.CrateReward;
@@ -28,6 +31,7 @@ import su.nightexpress.excellentcrates.editor.CrateEditorMenu;
 import su.nightexpress.excellentcrates.editor.CrateEditorType;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, CrateReward> {
@@ -159,9 +163,14 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
     public void onItemPrepare(@NotNull Player player, @NotNull MenuItem menuItem, @NotNull ItemStack item) {
         super.onItemPrepare(player, menuItem, item);
 
-        if (menuItem.getType() == CrateEditorType.REWARD_CHANGE_PREVIEW) {
+        Enum<?> type = menuItem.getType();
+        if (type == CrateEditorType.REWARD_CHANGE_PREVIEW) {
             item.setType(this.object.getPreview().getType());
             item.setAmount(this.object.getPreview().getAmount());
+        } else if (type == CrateEditorType.REWARD_CHANGE_COMMANDS) {
+            // Replace the `reward commands` placeholder
+            List<Component> commands = this.object.getCommands().stream().map(line -> Component.text(line).color(NamedTextColor.WHITE).asComponent()).toList();
+            item.editMeta(meta -> ItemUtil.replacePlaceholderListComponent(meta, Placeholders.REWARD_COMMANDS, commands, true));
         }
 
         item.editMeta(meta -> ItemUtil.replaceNameAndLore(meta, this.object.replacePlaceholders()));
@@ -177,7 +186,7 @@ public class EditorCrateReward extends AbstractEditorMenu<ExcellentCrates, Crate
         return true;
     }
 
-    static class ContentEditor extends AbstractMenu<ExcellentCrates> {
+    static class ContentEditor extends AbstractMenu<ExcellentCrates> { // TODO use it for sell menu maybe?
 
         private final CrateReward reward;
 

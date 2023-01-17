@@ -84,12 +84,13 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
         CrateUser user = plugin.getUserManager().getUserData(player);
         UserRewardWinLimit rewardLimit = user.getRewardWinLimit(reward);
 
-        UnaryOperator<String> replacer1 = user.replacePlaceholers(reward);
-        UnaryOperator<String> replacer2 = reward.replacePlaceholders();
-        UnaryOperator<String> replacer3 = this.crate.replacePlaceholders();
+        UnaryOperator<String> replacer = str -> str
+            .transform(user.replacePlaceholers(reward))
+            .transform(reward.replacePlaceholders())
+            .transform(this.crate.replacePlaceholders());
 
         // Prepare preview item name
-        final String finalName = StringUtil.replace(this.rewardName, replacer1, replacer2, replacer3);
+        final String finalName = this.rewardName.transform(replacer);
 
         // Prepare preview item lore
         List<String> lore = new ArrayList<>(this.rewardLore);
@@ -103,7 +104,7 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
         lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_COOLDOWN, lore, this.rewardLoreLimitCoolown);
         lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_DRAINED, lore, this.rewardLoreLimitDrained);
         lore = StringUtil.replacePlaceholderList(Placeholders.REWARD_PREVIEW_LORE, lore, ComponentUtil.asMiniMessage(ItemUtil.getLore(reward.getPreview())));
-        lore = StringUtil.replace(lore, replacer1, replacer2, replacer3);
+        lore = StringUtil.replace(lore, replacer);
         lore = StringUtil.compressEmptyLines(lore);
         final List<String> finalLore = lore;
 
