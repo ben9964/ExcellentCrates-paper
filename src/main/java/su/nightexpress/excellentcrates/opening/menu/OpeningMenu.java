@@ -18,6 +18,7 @@ import su.nexmedia.engine.api.menu.MenuItem;
 import su.nexmedia.engine.api.menu.MenuItemImpl;
 import su.nexmedia.engine.utils.StringUtil;
 import su.nightexpress.excellentcrates.ExcellentCrates;
+import su.nightexpress.excellentcrates.config.Config;
 import su.nightexpress.excellentcrates.crate.Crate;
 import su.nightexpress.excellentcrates.opening.PlayerOpeningData;
 import su.nightexpress.excellentcrates.opening.animation.AnimationInfo;
@@ -122,8 +123,7 @@ public class OpeningMenu extends AbstractMenu<ExcellentCrates> {
     public void open(@NotNull Player player, @NotNull Crate crate) {
         super.open(player, 1);
 
-        // костыль !!!!
-        Inventory inventory = player.getOpenInventory().getTopInventory();
+        Inventory inventory = player.getOpenInventory().getTopInventory(); // костыль !!!! (ну или нет)
         PlayerOpeningData data = PlayerOpeningData.create(player, crate, inventory);
 
         this.animations.values().forEach(animationInfo -> {
@@ -142,20 +142,20 @@ public class OpeningMenu extends AbstractMenu<ExcellentCrates> {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onInvClose14(@NotNull InventoryCloseEvent e) {
+    public void onInvClose14(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
         PlayerOpeningData data = PlayerOpeningData.get(player);
         if (data == null) return;
 
         if (data.isActive()) {
-            if (!data.canSkip()) return;
+            if (Config.CRATE_PREVENT_OPENING_SKIP.get() || !data.canSkip()) return;
             data.stop(false);
         }
         PlayerOpeningData.clean(player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onInvClick14(@NotNull InventoryClickEvent e) {
+    public void onInvClick14(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         PlayerOpeningData data = PlayerOpeningData.get(player);
         if (data == null) return;

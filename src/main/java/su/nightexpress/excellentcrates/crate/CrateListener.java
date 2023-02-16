@@ -41,13 +41,13 @@ public class CrateListener extends AbstractListener<ExcellentCrates> {
         Crate crate = null;
 
         if (item != null && !item.getType().isAir()) {
-            if (e.useItemInHand() == Event.Result.DENY) return;
             crate = this.crateManager.getCrateByItem(item);
         }
         if (crate == null) {
             item = null;
             block = e.getClickedBlock();
-            if (block == null || (e.useInteractedBlock() == Event.Result.DENY && block.getType() != Material.BARRIER)) return;
+            if (block == null || (e.useInteractedBlock() == Event.Result.DENY && block.getType() != Material.BARRIER))
+                return;
 
             crate = this.crateManager.getCrateByBlock(block);
         }

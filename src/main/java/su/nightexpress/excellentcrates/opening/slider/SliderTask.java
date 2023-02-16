@@ -8,6 +8,7 @@ import su.nexmedia.engine.utils.PDCUtil;
 import su.nexmedia.engine.utils.random.Rnd;
 import su.nightexpress.excellentcrates.ExcellentCratesAPI;
 import su.nightexpress.excellentcrates.Keys;
+import su.nightexpress.excellentcrates.api.event.CrateObtainRewardEvent;
 import su.nightexpress.excellentcrates.crate.CrateReward;
 import su.nightexpress.excellentcrates.opening.PlayerOpeningData;
 import su.nightexpress.excellentcrates.opening.task.OpeningTask;
@@ -17,7 +18,7 @@ public class SliderTask extends OpeningTask {
     private final SliderInfo parent;
 
     private long ticksSinceStart;
-    private int  rolls;
+    private int rolls;
     private long rollSpeed;
 
     public SliderTask(@NotNull PlayerOpeningData data, @NotNull SliderInfo parent) {
@@ -51,6 +52,9 @@ public class SliderTask extends OpeningTask {
                 CrateReward reward = this.data.getCrate().rollReward(this.data.getPlayer());
                 if (reward != null) {
                     reward.give(this.data.getPlayer());
+
+                    CrateObtainRewardEvent rewardEvent = new CrateObtainRewardEvent(reward, this.getData().getPlayer());
+                    ExcellentCratesAPI.PLUGIN.getPluginManager().callEvent(rewardEvent);
                 }
             }
         }
@@ -88,14 +92,12 @@ public class SliderTask extends OpeningTask {
                 int slot = slots[index];
                 if (index == 0) {
                     this.data.getInventory().setItem(slot, preview);
-                }
-                else {
+                } else {
                     int slot2 = slots[index - 1];
                     this.data.getInventory().setItem(slot, this.data.getInventory().getItem(slot2));
                 }
             }
-        }
-        else {
+        } else {
             for (int slot : slots) {
                 CrateReward reward = this.data.getCrate().rollReward(this.data.getPlayer());
                 if (reward == null) return;
@@ -145,6 +147,9 @@ public class SliderTask extends OpeningTask {
             if (reward == null) continue;
 
             reward.give(this.data.getPlayer());
+
+            CrateObtainRewardEvent rewardEvent = new CrateObtainRewardEvent(reward, this.getData().getPlayer());
+            ExcellentCratesAPI.PLUGIN.getPluginManager().callEvent(rewardEvent);
         }
     }
 

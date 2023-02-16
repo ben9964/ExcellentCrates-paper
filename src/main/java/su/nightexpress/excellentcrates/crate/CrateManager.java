@@ -22,6 +22,7 @@ import su.nightexpress.excellentcrates.Perms;
 import su.nightexpress.excellentcrates.Placeholders;
 import su.nightexpress.excellentcrates.api.CrateClickAction;
 import su.nightexpress.excellentcrates.api.OpenCostType;
+import su.nightexpress.excellentcrates.api.event.CrateObtainRewardEvent;
 import su.nightexpress.excellentcrates.api.event.CrateOpenEvent;
 import su.nightexpress.excellentcrates.api.hologram.HologramHandler;
 import su.nightexpress.excellentcrates.config.Config;
@@ -36,6 +37,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CrateManager extends AbstractManager<ExcellentCrates> {
 
@@ -48,7 +50,7 @@ public class CrateManager extends AbstractManager<ExcellentCrates> {
 
     @Override
     public void onLoad() {
-        this.crates = new HashMap<>();
+        this.crates = new ConcurrentHashMap<>();
         this.openings = new HashMap<>();
         this.plugin.getConfigManager().extractResources(Config.DIR_CRATES);
         this.plugin.getConfigManager().extractResources(Config.DIR_PREVIEWS);
@@ -295,6 +297,9 @@ public class CrateManager extends AbstractManager<ExcellentCrates> {
             if (reward != null) {
                 reward.give(player);
 
+                CrateObtainRewardEvent rewardEvent = new CrateObtainRewardEvent(reward, player);
+                plugin.getPluginManager().callEvent(rewardEvent);
+
                 if (block != null) {
                     if (block.getState() instanceof Lidded lidded) {
                         lidded.open();
@@ -318,6 +323,7 @@ public class CrateManager extends AbstractManager<ExcellentCrates> {
         }
 
         this.setCrateCooldown(player, crate);
+        user.setOpeningsAmount(crate, user.getOpeningsAmount(crate) + 1);
         return true;
     }
 

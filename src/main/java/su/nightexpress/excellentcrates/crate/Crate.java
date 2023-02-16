@@ -9,7 +9,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import su.nexmedia.engine.api.config.JYML;
-import su.nexmedia.engine.api.manager.*;
+import su.nexmedia.engine.api.manager.AbstractConfigHolder;
+import su.nexmedia.engine.api.manager.ICleanable;
+import su.nexmedia.engine.api.manager.IEditable;
+import su.nexmedia.engine.api.manager.IPlaceholder;
 import su.nexmedia.engine.lang.LangManager;
 import su.nexmedia.engine.utils.*;
 import su.nexmedia.engine.utils.random.Rnd;
@@ -130,10 +133,11 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
 
             List<String> rewCmds = cfg.getStringList(path + "Commands");
             List<ItemStack> rewItem = new ArrayList<>(Stream.of(cfg.getItemsEncoded(path + "Items")).toList());
+            Set<String> ignoredForPerms = cfg.getStringSet(path + "Ignored_For_Permissions");
 
             CrateReward reward = new CrateReward(this, rewId, rewName, rewChance, rBroadcast,
                 winLimitAmount, winLimitCooldown,
-                rewPreview, rewItem, rewCmds);
+                rewPreview, rewItem, rewCmds, ignoredForPerms);
             this.rewardMap.put(rewId, reward);
         }
 
@@ -180,6 +184,7 @@ public class Crate extends AbstractConfigHolder<ExcellentCrates> implements ICle
             cfg.setItemEncoded(path + "Preview", reward.getPreview());
             cfg.set(path + "Commands", reward.getCommands());
             cfg.setItemsEncoded(path + "Items", reward.getItems());
+            cfg.set(path + "Ignored_For_Permissions", reward.getIgnoredForPermissions());
         }
 
         // this.createPreview();

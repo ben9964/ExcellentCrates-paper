@@ -14,11 +14,8 @@ import java.util.Map;
 
 public class CrateEditorMenu extends AbstractEditorMenu<ExcellentCrates, ExcellentCrates> {
 
-    public static final String TITLE_CRATE = "Crate Editor";
-    public static final String TITLE_KEY = "Key Editor";
-
     private EditorCrateList editorCrateList;
-    private EditorKeyList   editorKeyList;
+    private EditorKeyList editorKeyList;
 
     public CrateEditorMenu(@NotNull ExcellentCrates plugin) {
         super(plugin, plugin, "ExcellentCrates Editor", 27);
@@ -26,8 +23,7 @@ public class CrateEditorMenu extends AbstractEditorMenu<ExcellentCrates, Excelle
         MenuClick click = (player, type, e) -> {
             if (type instanceof MenuItemType type2) {
                 this.onItemClickDefault(player, type2);
-            }
-            else if (type instanceof CrateEditorType type2) {
+            } else if (type instanceof CrateEditorType type2) {
                 if (type2 == CrateEditorType.EDITOR_CRATES) {
                     this.getCratesEditor().open(player, 1);
                     return;

@@ -15,9 +15,10 @@ import java.util.function.Function;
 
 public class CrateUserData extends AbstractUserDataHandler<ExcellentCrates, CrateUser> {
 
-    private static final String COL_KEYS              = "keys";
-    private static final String COL_KEYS_ONHOLD       = "keysOnHold";
-    private static final String COL_CRATE_COOLDOWNS   = "crateCooldowns";
+    private static final String COL_KEYS = "keys";
+    private static final String COL_KEYS_ONHOLD = "keysOnHold";
+    private static final String COL_CRATE_COOLDOWNS = "crateCooldowns";
+    private static final String COL_CRATE_OPENINGS = "crateOpenings";
     private static final String COL_REWARD_WIN_LIMITS = "rewardWinLimits";
 
     private static CrateUserData instance;
@@ -39,12 +40,13 @@ public class CrateUserData extends AbstractUserDataHandler<ExcellentCrates, Crat
                 }.getType());
                 Map<String, Long> openCooldowns = gson.fromJson(rs.getString(COL_CRATE_COOLDOWNS), new TypeToken<Map<String, Long>>() {
                 }.getType());
+                Map<String, Integer> openingsAmount = gson.fromJson(rs.getString(COL_CRATE_OPENINGS), new TypeToken<Map<String, Integer>>() {}.getType());
                 Map<String, Map<String, UserRewardWinLimit>> rewardWinLimits = this.gson.fromJson(rs.getString(COL_REWARD_WIN_LIMITS), new TypeToken<Map<String, Map<String, UserRewardWinLimit>>>() {
                 }.getType());
 
-                return new CrateUser(plugin, uuid, name, dateCreated, lastOnline, keys, keysOnHold, openCooldowns, rewardWinLimits);
-            }
-            catch (SQLException e) {
+                return new CrateUser(plugin, uuid, name, dateCreated, lastOnline,
+                    keys, keysOnHold, openCooldowns, openingsAmount, rewardWinLimits);
+            } catch (SQLException e) {
                 return null;
             }
         };
@@ -74,6 +76,8 @@ public class CrateUserData extends AbstractUserDataHandler<ExcellentCrates, Crat
             user.getKeysMap().putAll(fresh.getKeysMap());
             user.getCrateCooldowns().clear();
             user.getCrateCooldowns().putAll(fresh.getCrateCooldowns());
+            user.getOpeningsAmountMap().clear();
+            user.getOpeningsAmountMap().putAll(fresh.getOpeningsAmountMap());
             user.getRewardWinLimits().clear();
             user.getRewardWinLimits().putAll(fresh.getRewardWinLimits());
         }
@@ -84,6 +88,7 @@ public class CrateUserData extends AbstractUserDataHandler<ExcellentCrates, Crat
         super.onTableCreate();
         this.addColumn(this.tableUsers, COL_KEYS_ONHOLD, DataTypes.STRING.build(this.getDataType()), "{}");
         this.addColumn(this.tableUsers, COL_CRATE_COOLDOWNS, DataTypes.STRING.build(this.getDataType()), "{}");
+        this.addColumn(this.tableUsers, COL_CRATE_OPENINGS, DataTypes.STRING.build(this.getDataType()), "{}");
         this.addColumn(this.tableUsers, COL_REWARD_WIN_LIMITS, DataTypes.STRING.build(this.getDataType()), "{}");
     }
 
@@ -94,6 +99,7 @@ public class CrateUserData extends AbstractUserDataHandler<ExcellentCrates, Crat
         map.put(COL_KEYS, DataTypes.STRING.build(this.getDataType()));
         map.put(COL_KEYS_ONHOLD, DataTypes.STRING.build(this.getDataType()));
         map.put(COL_CRATE_COOLDOWNS, DataTypes.STRING.build(this.getDataType()));
+        map.put(COL_CRATE_OPENINGS, DataTypes.STRING.build(this.getDataType()));
         map.put(COL_REWARD_WIN_LIMITS, DataTypes.STRING.build(this.getDataType()));
         return map;
     }
@@ -105,6 +111,7 @@ public class CrateUserData extends AbstractUserDataHandler<ExcellentCrates, Crat
         map.put(COL_KEYS, this.gson.toJson(user.getKeysMap()));
         map.put(COL_KEYS_ONHOLD, this.gson.toJson(user.getKeysOnHold()));
         map.put(COL_CRATE_COOLDOWNS, this.gson.toJson(user.getCrateCooldowns()));
+        map.put(COL_CRATE_OPENINGS, this.gson.toJson(user.getOpeningsAmountMap()));
         map.put(COL_REWARD_WIN_LIMITS, this.gson.toJson(user.getRewardWinLimits()));
         return map;
     }

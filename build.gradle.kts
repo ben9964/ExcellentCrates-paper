@@ -52,7 +52,7 @@ dependencies {
 }
 
 group = "su.nightexpress.excellentcrates"
-version = "4.1.5".decorateVersion()
+version = "4.1.6".decorateVersion()
 description = "ExcellentCrates"
 
 fun lastCommitHash(): String = indraGit.commit()?.name?.substring(0, 7) ?: error("Could not determine commit hash")
@@ -76,39 +76,36 @@ bukkit {
 }
 
 tasks {
-    compileJava {
-        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-        options.release.set(17)
-    }
-    javadoc {
-        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-    }
-    processResources {
-        filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
-    }
-
-    val outputFileName = "ExcellentCrates-${project.version}"
-
     jar {
-        archiveFileName.set("$outputFileName.jar")
+        archiveFileName.set("ExcellentCrates-${project.version}.jar")
         archiveClassifier.set("")
         destinationDirectory.set(file("$rootDir"))
     }
-
-    register("deployToServer") {
+    register("deployJar") {
         doLast {
             exec {
                 commandLine("rsync", jar.get().archiveFile.get().asFile.absoluteFile, "dev:data/dev/jar")
             }
         }
     }
+    register("deployJarFresh") {
+        dependsOn(build)
+        finalizedBy(named("deployJar"))
+    }
+    compileJava {
+        options.encoding = Charsets.UTF_8.name()
+    }
+    javadoc {
+        options.encoding = Charsets.UTF_8.name()
+    }
+    processResources {
+        filteringCharset = Charsets.UTF_8.name()
+    }
 }
 
 java {
     withSourcesJar()
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 publishing {

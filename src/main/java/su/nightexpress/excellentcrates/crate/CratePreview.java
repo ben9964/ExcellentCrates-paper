@@ -32,7 +32,7 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
     private final String rewardName;
     private final List<String> rewardLore;
     private final List<String> rewardLoreLimitAmount;
-    private final List<String> rewardLoreLimitCoolown;
+    private final List<String> rewardLoreLimitCooldown;
     private final List<String> rewardLoreLimitDrained;
     private final boolean hideDrainedRewards;
 
@@ -46,7 +46,7 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
         this.rewardName = cfg.getString("Reward.Name", Placeholders.REWARD_PREVIEW_NAME);
         this.rewardLore = cfg.getStringList("Reward.Lore.Default");
         this.rewardLoreLimitAmount = cfg.getStringList("Reward.Lore.Win_Limit.Amount");
-        this.rewardLoreLimitCoolown = cfg.getStringList("Reward.Lore.Win_Limit.Cooldown");
+        this.rewardLoreLimitCooldown = cfg.getStringList("Reward.Lore.Win_Limit.Cooldown");
         this.rewardLoreLimitDrained = cfg.getStringList("Reward.Lore.Win_Limit.Drained");
 
         MenuClick click = (player, type, e) -> {
@@ -101,7 +101,7 @@ public class CratePreview extends AbstractMenuAuto<ExcellentCrates, CrateReward>
         if (rewardLimit == null || !rewardLimit.isDrained(reward))
             lore.remove(PLACEHOLDER_WIN_LIMIT_DRAINED);
         lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_AMOUNT, lore, this.rewardLoreLimitAmount);
-        lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_COOLDOWN, lore, this.rewardLoreLimitCoolown);
+        lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_COOLDOWN, lore, this.rewardLoreLimitCooldown);
         lore = StringUtil.replacePlaceholderList(PLACEHOLDER_WIN_LIMIT_DRAINED, lore, this.rewardLoreLimitDrained);
         lore = StringUtil.replacePlaceholderList(Placeholders.REWARD_PREVIEW_LORE, lore, ComponentUtil.asMiniMessage(ItemUtil.getLore(reward.getPreview())));
         lore = StringUtil.replace(lore, replacer);
