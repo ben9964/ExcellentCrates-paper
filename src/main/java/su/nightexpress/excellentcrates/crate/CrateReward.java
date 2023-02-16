@@ -1,10 +1,10 @@
 package su.nightexpress.excellentcrates.crate;
 
+import cc.mewcraft.mewcore.item.api.PluginItemRegistry;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import su.nexmedia.engine.NexEngine;
 import su.nexmedia.engine.api.manager.ICleanable;
 import su.nexmedia.engine.api.manager.IEditable;
 import su.nexmedia.engine.api.manager.IPlaceholder;
@@ -211,7 +211,7 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
     }
 
     public void setPreview(@NotNull ItemStack item) {
-        this.preview = NexEngine.get().getPluginItemRegistry().refreshItemStack(new ItemStack(item));
+        this.preview = PluginItemRegistry.get().refreshItemStack(new ItemStack(item));
     }
 
     @NotNull
@@ -246,14 +246,14 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
         ListIterator<ItemStack> it = items.listIterator();
         while (it.hasNext()) {
             ItemStack itemStack = it.next();
-            itemStack = NexEngine.get().getPluginItemRegistry().refreshItemStack(itemStack);
+            itemStack = PluginItemRegistry.get().refreshItemStack(itemStack);
             it.set(itemStack);
         }
         // Custom plugin item integration - end
     }
 
     public void addItem(@NotNull ItemStack item) {
-        this.items.add(NexEngine.get().getPluginItemRegistry().refreshItemStack(item));
+        this.items.add(PluginItemRegistry.get().refreshItemStack(item));
     }
 
     public void give(@NotNull Player player) {

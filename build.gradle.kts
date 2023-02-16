@@ -43,6 +43,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("cc.mewcraft:MewCore:5.13.1")
     compileOnly("su.nexmedia:NexEngine:2.2.8")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.2.5")
@@ -65,7 +66,7 @@ bukkit {
     description = "Fully customizable crates with rewards. Enjoy."
     apiVersion = "1.17"
     authors = listOf("NightExpress")
-    depend = listOf("NexEngine")
+    depend = listOf("NexEngine", "MewCore")
     softDepend = listOf(
         "Citizens",
         "HolographicDisplays",
