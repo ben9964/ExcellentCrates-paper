@@ -56,9 +56,6 @@ group = "su.nightexpress.excellentcrates"
 version = "4.1.6".decorateVersion()
 description = "ExcellentCrates"
 
-fun lastCommitHash(): String = indraGit.commit()?.name?.substring(0, 7) ?: error("Could not determine commit hash")
-fun String.decorateVersion(): String = if (endsWith("-SNAPSHOT")) "$this-${lastCommitHash()}" else this
-
 bukkit {
     main = "su.nightexpress.excellentcrates.ExcellentCrates"
     name = "ExcellentCrates"
@@ -81,6 +78,14 @@ tasks {
         archiveFileName.set("ExcellentCrates-${project.version}.jar")
         archiveClassifier.set("")
         destinationDirectory.set(file("$rootDir"))
+    }
+    processResources {
+        filesMatching("**/paper-plugin.yml") {
+            expand(mapOf(
+                "version" to "${project.version}",
+                "description" to project.description
+            ))
+        }
     }
     register("deployJar") {
         doLast {
@@ -114,3 +119,6 @@ publishing {
         from(components["java"])
     }
 }
+
+fun lastCommitHash(): String = indraGit.commit()?.name?.substring(0, 7) ?: error("Could not determine commit hash")
+fun String.decorateVersion(): String = if (endsWith("-SNAPSHOT")) "$this-${lastCommitHash()}" else this
