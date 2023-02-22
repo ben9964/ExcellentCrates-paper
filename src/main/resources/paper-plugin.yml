@@ -5,7 +5,9 @@ api-version: 1.19
 authors: [ NightExpress, Nailm ]
 description: ${description}
 load-before: [ ]
-load-after: [ ]
+load-after:
+  - name: NexEngine
+    bootstrap: false
 dependencies:
   - name: NexEngine
     required: true
