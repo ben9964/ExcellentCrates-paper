@@ -243,7 +243,7 @@ public class CrateReward implements IEditable, ICleanable, IPlaceholder {
         this.items.removeIf(item -> item == null || item.getType().isAir());
 
         // Custom plugin item integration - start
-        ListIterator<ItemStack> it = items.listIterator();
+        ListIterator<ItemStack> it = this.items.listIterator();
         while (it.hasNext()) {
             ItemStack itemStack = it.next();
             itemStack = PluginItemRegistry.get().refreshItemStack(itemStack);
