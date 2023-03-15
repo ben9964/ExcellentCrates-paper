@@ -5,7 +5,7 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
     id("net.kyori.indra.git") version "2.1.1"
 }
 
@@ -94,9 +94,20 @@ tasks {
             }
         }
     }
+    register("deployJarRemote") {
+        doLast {
+            exec {
+                commandLine("rsync", jar.get().archiveFile.get().asFile.absoluteFile, "mc-main:data/dev/jar")
+            }
+        }
+    }
     register("deployJarFresh") {
         dependsOn(build)
         finalizedBy(named("deployJar"))
+    }
+    register("deployJarFreshRemote") {
+        dependsOn(build)
+        finalizedBy(named("deployJarRemote"))
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name()
