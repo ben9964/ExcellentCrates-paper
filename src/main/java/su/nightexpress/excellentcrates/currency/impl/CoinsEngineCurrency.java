@@ -74,7 +74,7 @@ public class CoinsEngineCurrency implements Currency, CurrencyHandler {
     @Override
     @NotNull
     public PlaceholderMap getPlaceholders() {
-        return this.currency.getPlaceholders();
+        return null;
     }
 
     @Override

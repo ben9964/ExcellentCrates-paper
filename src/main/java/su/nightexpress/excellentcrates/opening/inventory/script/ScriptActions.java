@@ -61,10 +61,16 @@ public class ScriptActions {
         String name = result.get(Parameters.NAME, Placeholders.DEFAULT);
         int delay = result.get(Parameters.DELAY, 0);
 
-        Sound sound = StringUtil.getEnum(name, Sound.class).orElse(null);
+        Sound sound;
+        try {
+            sound = Sound.valueOf(name);
+        } catch (Exception e) {
+            sound = null;
+        }
         if (sound == null) return;
 
-        opening.schedule(() -> UniSound.of(sound).play(opening.getPlayer()), delay);
+        Sound finalSound = sound;
+        opening.schedule(() -> UniSound.of(finalSound).play(opening.getPlayer()), delay);
     }, Parameters.NAME, Parameters.DELAY);
 
     @NotNull

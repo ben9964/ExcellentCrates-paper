@@ -1,0 +1,15 @@
+name: ExcellentCrates
+version: 4.1.6
+main: su.nightexpress.excellentcrates.ExcellentCrates
+description: Fully customizable crates with rewards. Enjoy.
+authors:
+ - NightExpress
+depend:
+ - nightcore
+api-version: 1.21
+softdepend:
+ - Citizens
+ - HolographicDisplays
+ - DecentHolograms
+ - Vault
+ - PlaceholderAPI
