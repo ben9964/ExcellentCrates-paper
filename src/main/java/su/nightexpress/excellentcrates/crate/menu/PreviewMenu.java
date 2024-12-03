@@ -147,7 +147,11 @@ public class PreviewMenu extends ConfigMenu<CratesPlugin> implements AutoFilled<
 
                     if (amountLeft > 0) {
                         limitAmountLore.addAll(this.rewardLimitAmountLore);
-                        limitAmountLore.replaceAll(str -> str.replace(GENERIC_AMOUNT, NumberUtil.format(amountLeft)));
+                        limitAmountLore.replaceAll(str -> str
+                            .replace(GENERIC_AMOUNT, NumberUtil.format(amountLeft))
+                            .replace("%amount_total%", reward.getPlayerLimits().getAmount() + "")
+                            .replace("%amount_drawn%", reward.getDraws(player) + "")
+                        );
                     }
                     if (expireIn != 0L) {
                         limitCooldownLore.addAll(this.rewardLimitCoolownLore);

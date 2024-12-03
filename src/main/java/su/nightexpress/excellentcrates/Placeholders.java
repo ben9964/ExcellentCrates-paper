@@ -97,7 +97,7 @@ public class Placeholders extends su.nightexpress.nightcore.util.Placeholders {
     public static final  String REWARD_PLACEHOLDER_APPLY  = "%reward_placeholder_apply%";
 
 
-//    @Deprecated public static final Function<LimitType, String> REWARD_WIN_LIMIT_ENABLED  = limitType -> "%reward_" + limitType.name().toLowerCase() + "_win_limit_enabled%";
+//    @Deprecated public static final Function<LimitType, String> REWARD_ewWIN_LIMIT_ENABLED  = limitType -> "%reward_" + limitType.name().toLowerCase() + "_win_limit_enabled%";
 //    @Deprecated public static final Function<LimitType, String> REWARD_WIN_LIMIT_AMOUNT   = limitType -> "%reward_" + limitType.name().toLowerCase() + "_win_limit_amount%";
 //    @Deprecated public static final Function<LimitType, String> REWARD_WIN_LIMIT_COOLDOWN = limitType -> "%reward_" + limitType.name().toLowerCase() + "_win_limit_cooldown%";
 //    @Deprecated public static final Function<LimitType, String> REWARD_WIN_LIMIT_STEP     = limitType -> "%reward_" + limitType.name().toLowerCase() + "_win_limit_step%";

@@ -217,6 +217,38 @@ public class Reward implements Weighted, Placeholder {
         return Math.min(playerLeft, globalLeft);
     }
 
+    public int getDraws(Player player) {
+        int globalLeft = globalLimits.getAmount();
+        int playerLeft = playerLimits.getAmount();
+
+        if (globalLimits.isEnabled() && !globalLimits.isUnlimitedAmount()) {
+            if (this.globalLimitData != null) {
+                if (this.globalLimitData.isOutOfStock(globalLimits)) return 0;
+
+                globalLeft = this.globalLimitData.getAmount();
+            }
+        }
+        else globalLeft = -1;
+
+        if (playerLimits.isEnabled() && !playerLimits.isUnlimitedAmount()) {
+            CrateUser user = this.plugin.getUserManager().getUserData(player);
+            CrateData data = user.getCrateData(this.crate);
+            LimitData winData = data.getRewardLimit(this);
+            if (winData != null) {
+                if (winData.isOutOfStock(playerLimits)) return 0;
+
+                playerLeft = winData.getAmount();
+            }
+        }
+        else playerLeft = -1;
+
+        if (globalLeft < 0 || playerLeft < 0) {
+            return Math.max(playerLeft, globalLeft);
+        }
+
+        return Math.min(playerLeft, globalLeft);
+    }
+
     public long getDrawCooldown(@NotNull Player player) {
         long globalLeft = 0L;
         long playerLeft = 0L;
